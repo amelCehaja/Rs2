@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm ="clr-namespace:MobileApp.ViewModels"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.TjelesniNapredakDetailsPage">
+    <ContentPage.BindingContext>
+        <vm:TjelesniNapredakDetailsViewModel></vm:TjelesniNapredakDetailsViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <views:Navigation></views:Navigation>
+            <Grid Padding="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Datum:" Grid.Row="0" Grid.Column="0"></Label>
+                <Entry Text="{Binding Detalji.Datum}" Grid.Row="0" Grid.Column="1" IsReadOnly="True"></Entry>
+                <Label Text="Težina (kg):" Grid.Column="0" Grid.Row="1"></Label>
+                <Entry Text="{Binding Detalji.Tezina}" Grid.Column="1" Grid.Row="1"></Entry>
+                <Label Text="Obim bicepsa (cm):" Grid.Column="0" Grid.Row="2"></Label>
+                <Entry Text="{Binding Detalji.ObimBicepsa}" Grid.Column="1" Grid.Row="2"></Entry>
+                <Label Text="Obim prsa (cm):" Grid.Column="0" Grid.Row="3"></Label>
+                <Entry Text="{Binding Detalji.ObimPrsa}" Grid.Column="1" Grid.Row="3"></Entry>
+                <Label Text="Obim struka (cm):" Grid.Column="0" Grid.Row="4"></Label>
+                <Entry Text="{Binding Detalji.ObimStruka}" Grid.Column="1" Grid.Row="4"></Entry>
+                <Label Text="Obim noge (cm):" Grid.Column="0" Grid.Row="5"></Label>
+                <Entry Text="{Binding Detalji.ObimNoge}" Grid.Column="1" Grid.Row="5"></Entry>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

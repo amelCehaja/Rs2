@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.VjezbePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <views:Navigation HeightRequest="70"></views:Navigation>
+            <Label Text="Misic:"></Label>
+            <Picker ItemsSource="{Binding Misici}" SelectedItem="{Binding Misic}" ItemDisplayBinding="{Binding Naziv}"></Picker>
+            
+            <Label Text="Vjezbe"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding Vjezbe}" ItemSelected="ListView_OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Naziv}"
+                                       LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="16"/>
+                                <Label Text="{Binding MisiciString}"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="Small"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

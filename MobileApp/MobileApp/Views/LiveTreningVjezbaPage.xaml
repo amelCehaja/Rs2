@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MobileApp.Converters"
+             x:Class="MobileApp.Views.LiveTreningVjezbaPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="imgConv"></converters:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Vjezba.Naziv}" FontSize="Large" HorizontalOptions="Center"></Label>
+            <Label Text="{Binding BrojPonavljanja}" FontSize="Large" HorizontalOptions="Center"></Label>
+            <Image Source="{Binding Vjezba.Gif, Converter={StaticResource imgConv}}" VerticalOptions="Center"></Image>
+            <Button Text="DALJE" VerticalOptions="End" Clicked="Dalje"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

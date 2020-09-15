@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.UporedbaTjelesnihDetaljaPage">
+    <ContentPage.Content>
+        <StackLayout WidthRequest="380">
+            <views:Navigation></views:Navigation>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="1.1.2020"  Grid.Row="0" HorizontalOptions="Center" Grid.Column="0"></Label>
+                <Label Text="1.1.2020"  Grid.Row="0" HorizontalOptions="Center" Grid.Column="1"></Label>
+            </Grid>
+            <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding TezinaWidth}"></ColumnDefinition>
+                    <ColumnDefinition Width="{Binding TezinaDvaWidth}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Težina" FontSize="Medium"  Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiJedan.Tezina}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiDva.Tezina}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"></Label>
+                <BoxView BackgroundColor="Gray" HorizontalOptions="End" HeightRequest="20" WidthRequest="{Binding TezinaWidth}"    Grid.Row="2" Grid.Column="0" ></BoxView>
+                <BoxView BackgroundColor="Red"  HorizontalOptions="Start" HeightRequest="20" WidthRequest="{Binding TezinaDvaWidth}"  Grid.Row="2" Grid.Column="1"></BoxView>
+            </Grid>
+            <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding StrukWidth}"></ColumnDefinition>
+                    <ColumnDefinition Width="{Binding StrukDvaWidth}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Obim struka" FontSize="Medium" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiJedan.ObimStruka}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiDva.ObimStruka}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"></Label>
+                <BoxView BackgroundColor="Gray" HorizontalOptions="End" HeightRequest="20" WidthRequest="{Binding StrukWidth}"    Grid.Row="2" Grid.Column="0" ></BoxView>
+                <BoxView BackgroundColor="Red"  HorizontalOptions="Start" HeightRequest="20" WidthRequest="{Binding StrukDvaWidth}"  Grid.Row="2" Grid.Column="1"></BoxView>
+            </Grid>
+            <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding PrsaWidth}"></ColumnDefinition>
+                    <ColumnDefinition Width="{Binding PrsaDvaWidth}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Obim prsa" FontSize="Medium"  Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiJedan.ObimPrsa}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiDva.ObimPrsa}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"></Label>
+                <BoxView BackgroundColor="Gray" HorizontalOptions="End" HeightRequest="20" WidthRequest="{Binding PrsaWidth}"    Grid.Row="2" Grid.Column="0" ></BoxView>
+                <BoxView BackgroundColor="Red"  HorizontalOptions="Start" HeightRequest="20" WidthRequest="{Binding PrsaDvaWidth}"  Grid.Row="2" Grid.Column="1"></BoxView>
+            </Grid>
+            <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding BicepsWidth}"></ColumnDefinition>
+                    <ColumnDefinition Width="{Binding BicepsDvaWidth}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Obim bicepsa" FontSize="Medium"  Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiJedan.ObimBicepsa}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiDva.ObimBicepsa}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"></Label>
+                <BoxView BackgroundColor="Gray" HorizontalOptions="End" HeightRequest="20" WidthRequest="{Binding BicepsWidth}"    Grid.Row="2" Grid.Column="0" ></BoxView>
+                <BoxView BackgroundColor="Red"  HorizontalOptions="Start" HeightRequest="20" WidthRequest="{Binding BicepsDvaWidth}"  Grid.Row="2" Grid.Column="1"></BoxView>
+            </Grid>
+            <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding NogaWidth}"></ColumnDefinition>
+                    <ColumnDefinition Width="{Binding NogaDvaWidth}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Obim noge" FontSize="Medium"  Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiJedan.ObimNoge}" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding DetaljiDva.ObimNoge}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"></Label>
+                <BoxView BackgroundColor="Gray" HorizontalOptions="End" HeightRequest="20" WidthRequest="{Binding NogaWidth}"    Grid.Row="2" Grid.Column="0" ></BoxView>
+                <BoxView BackgroundColor="Red"  HorizontalOptions="Start" HeightRequest="20" WidthRequest="{Binding NogaDvaWidth}"  Grid.Row="2" Grid.Column="1"></BoxView>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

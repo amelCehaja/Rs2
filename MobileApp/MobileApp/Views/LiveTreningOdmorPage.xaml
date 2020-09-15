@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Views.LiveTreningOdmorPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="ODMOR" FontSize="Large" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+            <Label Text="{Binding SecondsElapsed}" FontSize="200" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></Label>
+            <Entry Text="{Binding Test}" TextChanged="Entry_TextChanged" IsReadOnly="True" IsVisible="false"></Entry>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

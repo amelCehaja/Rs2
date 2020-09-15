@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.MainPage">
+
+    <StackLayout>
+        <Button Text="Planovi i programi" Clicked="Planovi" HeightRequest="70" ></Button>
+        <Button Text="Vjezbe" Clicked="Vjezbe" HeightRequest="70"></Button>
+        <Button Text="Tjelesni napredak" Clicked="TjelesniNapredak" HeightRequest="70"></Button>
+    </StackLayout>
+
+</ContentPage>

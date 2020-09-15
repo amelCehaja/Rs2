@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.TjelesniNapredakList">
+    <ContentPage.Content>
+        <StackLayout>
+            <views:Navigation HeightRequest="70"></views:Navigation>
+            <Grid HeightRequest="140">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Detalji 1:" Grid.Row="0" Grid.Column="0"></Label>
+                <Label Text="Detalji 2:" Grid.Row="0" Grid.Column="1"></Label>
+                <Picker ItemsSource="{Binding Detalji}" ItemDisplayBinding="{Binding DatumString}" SelectedItem="{Binding DetaljiJedan}" Grid.Row="1" Grid.Column="0"></Picker>
+                <Picker ItemsSource="{Binding Detalji}" ItemDisplayBinding="{Binding DatumString}" SelectedItem="{Binding DetaljiDva}" Grid.Row="1" Grid.Column="1"></Picker>
+                <Button Text="Uporedi" Grid.Row="1" Grid.Column="2" Clicked="Uporedi"></Button>
+            </Grid>
+            <ListView ItemsSource="{Binding Detalji}" ItemSelected="Detalji_Selected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <Label Text="{Binding DatumString}" HeightRequest="40"></Label>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Dodaj tjelesne detalje" Clicked="Dodaj" VerticalOptions="End"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

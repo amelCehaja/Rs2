@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.TjelesniNapredakAdd">
+    <ContentPage.Content>
+        <StackLayout>
+            <views:Navigation></views:Navigation>
+            <Label Text="Tezina (kg)"></Label>
+            <Entry Text="{Binding Tezina}" ></Entry>
+            <Label Text="Obim bicepsa (cm)"></Label>
+            <Entry Text="{Binding ObimBicepsa}"></Entry>
+            <Label Text="Obim prsa (cm)"></Label>
+            <Entry Text="{Binding ObimPrsa}"></Entry>
+            <Label Text="Obim struka (cm)"></Label>
+            <Entry Text="{Binding ObimStruka}"></Entry>
+            <Label Text="Obim noge (cm)"></Label>
+            <Entry Text="{Binding ObimNoge}"></Entry>
+            <Button Text="Spremi" Clicked="Spremi_Click"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

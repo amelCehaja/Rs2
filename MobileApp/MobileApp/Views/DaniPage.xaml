@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MobileApp.Views"
+             x:Class="MobileApp.Views.DaniPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <views:Navigation></views:Navigation>
+            <ListView ItemsSource="{Binding Dani}" ItemSelected="Select_Dan">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Naziv}" HeightRequest="50"></Label>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
