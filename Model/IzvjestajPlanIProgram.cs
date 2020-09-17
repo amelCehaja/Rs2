@@ -8,5 +8,6 @@ namespace Model
     {
         public string Naziv { get; set; }
         public double UkupnaZarada { get; set; }
+        public int BrojProdanih { get; set; }
     }
 }

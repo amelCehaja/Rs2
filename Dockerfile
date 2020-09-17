@@ -10,6 +10,5 @@ RUN dotnet publish "WebAPI" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ADD /UsedImages img/
 
 ENTRYPOINT ["dotnet", "WebAPI.dll"]

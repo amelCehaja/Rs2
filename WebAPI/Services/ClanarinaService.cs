@@ -18,17 +18,32 @@ namespace WebAPI.Services
         }
         public override List<Model.Clanarina> Get(ClanarinaSearchRequest request)
         {
-            List<Model.Clanarina> clanarine = _context.Clanarina
-                                                .Where(x => x.KorisnikId == request.KorisnikId)
-                                                .Select(x => new Model.Clanarina
-                                                {
-                                                    Id = x.Id,
-                                                    KorisnikId = x.KorisnikId,
-                                                    DatumDodavanja = x.DatumDodavanja,
-                                                    DatumIsteka = x.DatumIsteka,
-                                                    TipClanarine = x.TipClanarine.Naziv + " - " + x.Cijena.ToString() + " KM"
-                                                })
-                                                .ToList();
+            List<Model.Clanarina> clanarine = new List<Model.Clanarina>();
+            if (request.KorisnikId != null)
+            {
+                clanarine = _context.Clanarina
+                                                    .Where(x => x.KorisnikId == request.KorisnikId)
+                                                    .Select(x => new Model.Clanarina
+                                                    {
+                                                        Id = x.Id,
+                                                        KorisnikId = x.KorisnikId,
+                                                        DatumDodavanja = x.DatumDodavanja,
+                                                        DatumIsteka = x.DatumIsteka,
+                                                        TipClanarine = x.TipClanarine.Naziv + " - " + x.Cijena.ToString() + " KM"
+                                                    })
+                                                    .ToList();
+            }
+            else
+            {
+                clanarine = _context.Clanarina.Where(x => x.DatumDodavanja.Date > request.Od && x.DatumDodavanja < request.Do).Select(x => new Model.Clanarina
+                {
+                    Id = x.Id,
+                    KorisnikId = x.KorisnikId,
+                    DatumDodavanja = x.DatumDodavanja,
+                    DatumIsteka = x.DatumIsteka,
+                    TipClanarine = x.TipClanarine.Naziv + " - " + x.Cijena.ToString() + " KM"
+                }).ToList();
+            }
             return clanarine;
         }
     }

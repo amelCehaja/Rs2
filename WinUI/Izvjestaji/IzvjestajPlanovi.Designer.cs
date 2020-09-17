@@ -37,6 +37,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BrojProdanih = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UkupnaZarada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,20 +88,21 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 103);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(18, 423);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(112, 18);
             this.label3.TabIndex = 5;
             this.label3.Text = "Ukupna zarada:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(122, 103);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(136, 423);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.Size = new System.Drawing.Size(0, 18);
             this.label4.TabIndex = 6;
-            this.label4.Text = "label4";
             // 
             // label5
             // 
@@ -111,17 +115,45 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(21, 170);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Naziv,
+            this.BrojProdanih,
+            this.UkupnaZarada});
+            this.dataGridView1.Location = new System.Drawing.Point(21, 90);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(428, 223);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(350, 312);
             this.dataGridView1.TabIndex = 8;
+            // 
+            // Naziv
+            // 
+            this.Naziv.DataPropertyName = "Naziv";
+            this.Naziv.HeaderText = "Naziv";
+            this.Naziv.Name = "Naziv";
+            this.Naziv.ReadOnly = true;
+            // 
+            // BrojProdanih
+            // 
+            this.BrojProdanih.DataPropertyName = "BrojProdanih";
+            this.BrojProdanih.HeaderText = "Broj prodanih";
+            this.BrojProdanih.Name = "BrojProdanih";
+            this.BrojProdanih.ReadOnly = true;
+            // 
+            // UkupnaZarada
+            // 
+            this.UkupnaZarada.DataPropertyName = "UkupnaZarada";
+            this.UkupnaZarada.HeaderText = "Zarada";
+            this.UkupnaZarada.Name = "UkupnaZarada";
+            this.UkupnaZarada.ReadOnly = true;
             // 
             // IzvjestajPlanovi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(618, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -133,6 +165,7 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Name = "IzvjestajPlanovi";
             this.Text = "IzvjestajPlanovi";
+            this.Load += new System.EventHandler(this.IzvjestajPlanovi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -150,5 +183,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BrojProdanih;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UkupnaZarada;
     }
 }

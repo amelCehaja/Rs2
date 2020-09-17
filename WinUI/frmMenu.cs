@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinUI.Clanovi;
+using WinUI.Izvjestaji;
 using WinUI.Misic;
 using WinUI.PlanIProgram;
 using WinUI.PrisutnostClana;
@@ -56,6 +57,18 @@ namespace WinUI
         private void btnPlanIProgram_Click(object sender, EventArgs e)
         {
             frmPlanIProgram frm = new frmPlanIProgram();
+            frm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            IzvjestajPlanovi frm = new IzvjestajPlanovi();
+            frm.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            frmIzvjestajClanovi frm = new frmIzvjestajClanovi();
             frm.Show();
         }
     }

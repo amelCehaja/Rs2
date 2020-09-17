@@ -7,6 +7,6 @@ namespace Model.Requests
     public class KorisnikPlanSearchRequest
     {
         public int PlanId { get; set; }
-        public int KorisnikId { get; set; }
+        public int? KorisnikId { get; set; }
     }
 }
