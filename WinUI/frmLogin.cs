@@ -25,6 +25,8 @@ namespace WinUI
             {
                 APIService.Username = txtUsername.Text;
                 APIService.Password = txtPassword.Text;
+                List<Model.Korisnik> korisnici = await _service.Get<List<Model.Korisnik>>(null);
+                APIService.UserId = korisnici.Where(x => x.Username == APIService.Username).Select(x => x.Id).SingleOrDefault();
                 await _service.Get<dynamic>(null);
                 this.Hide();
                 frmMenu frm = new frmMenu(); 

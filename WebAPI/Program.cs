@@ -19,8 +19,8 @@ namespace WebAPI
             var host = CreateWebHostBuilder(args).Build();
             using(var scope = host.Services.CreateScope())
             {
-                var service = scope.ServiceProvider.GetRequiredService<RS2Context>();
-                SetupService.Init(service);
+               // var service = scope.ServiceProvider.GetRequiredService<RS2Context>();
+                //SetupService.Init(service);
             }
             host.Run();
         }

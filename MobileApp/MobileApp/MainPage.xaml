@@ -4,6 +4,7 @@
              x:Class="MobileApp.MainPage">
 
     <StackLayout>
+        <Button Text="Moji planovi" Clicked="Button_Clicked" HeightRequest="70"></Button>
         <Button Text="Planovi i programi" Clicked="Planovi" HeightRequest="70" ></Button>
         <Button Text="Vjezbe" Clicked="Vjezbe" HeightRequest="70"></Button>
         <Button Text="Tjelesni napredak" Clicked="TjelesniNapredak" HeightRequest="70"></Button>

@@ -18,10 +18,14 @@ namespace WebAPI.Services
         public override List<KorisnikPlan> Get([FromQuery] KorisnikPlanSearchRequest search)
         {
             List<KorisnikPlanIprogram> list = new List<KorisnikPlanIprogram>();
-            if(search.KorisnikId == null)
+            if(search.KorisnikId == null && search.PlanId != null)
             {
                 list = _context.KorisnikPlanIprogram.Where(x => x.PlanId == search.PlanId).ToList();
-            }else 
+            }else if(search.KorisnikId != null && search.PlanId == null)
+            {
+                list = _context.KorisnikPlanIprogram.Where(x => x.KorisnikId == search.KorisnikId).ToList();
+            }
+            else 
                 list = _context.KorisnikPlanIprogram.Where(x => x.KorisnikId == search.KorisnikId && x.PlanId == search.PlanId).ToList();
             return _mapper.Map<List<Model.KorisnikPlan>>(list);
         }

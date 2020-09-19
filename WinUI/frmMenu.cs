@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WinUI.Clanovi;
 using WinUI.Izvjestaji;
 using WinUI.Misic;
+using WinUI.Pitanja;
 using WinUI.PlanIProgram;
 using WinUI.PrisutnostClana;
 using WinUI.TipoviClanarine;
@@ -69,6 +70,12 @@ namespace WinUI
         private void button2_Click(object sender, EventArgs e)
         {
             frmIzvjestajClanovi frm = new frmIzvjestajClanovi();
+            frm.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PitanjaList frm = new PitanjaList();
             frm.Show();
         }
     }

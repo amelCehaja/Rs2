@@ -19,15 +19,31 @@ namespace WebAPI.Services
         }
         public override List<Model.Komentar> Get([FromQuery] KomentarSearchRequest search)
         {
-            var komentari = _context.Komentar.Include(x => x.NadKomentar).Include(x => x.Korisnik).Where(x => x.PlanId == search.PlanId && x.NadKomentarId == null).ToList();
-            List<Model.Komentar> data = new List<Model.Komentar>();
-            foreach(var x in komentari)
+            if (search.PlanId != null)
             {
-                var _komentar = _mapper.Map<Model.Komentar>(x);
-                _komentar.NadKomentar = _mapper.Map<Model.Komentar>(_context.Komentar.Where(y => y.NadKomentarId == x.Id).SingleOrDefault());
-                data.Add(_komentar);
+                var komentari = _context.Komentar.Include(x => x.NadKomentar).Include(x => x.Korisnik).Where(x => x.PlanId == search.PlanId && x.NadKomentarId == null).ToList();
+                List<Model.Komentar> data = new List<Model.Komentar>();
+                foreach (var x in komentari)
+                {
+                    var _komentar = _mapper.Map<Model.Komentar>(x);
+                    _komentar.NadKomentar = _mapper.Map<Model.Komentar>(_context.Komentar.Where(y => y.NadKomentarId == x.Id).SingleOrDefault());
+                    data.Add(_komentar);
+                }
+                return data;
             }
-            return data;
+            var pitanja = _context.Komentar.Where(x => x.NadKomentarId == null).ToList();
+            var model = new List<Model.Komentar>();
+            foreach(var x in pitanja)
+            {
+                var odgovor = _context.Komentar.Where(y => y.NadKomentarId == x.Id).FirstOrDefault();
+                if(odgovor == null)
+                {
+                    Model.Komentar _pitanje = _mapper.Map<Model.Komentar>(x);
+                    _pitanje.ImePrezime = _context.Korisnik.Where(y => y.Id == x.KorisnikId).Select(y => y.Ime + " " + y.Prezime).FirstOrDefault();
+                    model.Add(_pitanje);
+                } 
+            }
+            return model;
         }
     }
 }

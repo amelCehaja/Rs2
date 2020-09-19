@@ -25,6 +25,8 @@ namespace MobileApp.ViewModels
         public ICommand InitCommand { get; set; }
         public async Task Init()
         {
+            RecomendPlanoviList.Clear();
+            OtherPlanoviList.Clear();
             TjelesniDetaljiSearchRequest detaljiSearchRequest = new TjelesniDetaljiSearchRequest { KorisnikId = APIService.UserId };
             var tjelesniDetalji = await _tjelesniDetalji.Get<List<TjelesniDetalji>>(detaljiSearchRequest);
             int id = tjelesniDetalji[0].Id;

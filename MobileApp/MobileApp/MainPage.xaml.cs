@@ -27,5 +27,10 @@ namespace MobileApp
         {
             await Navigation.PushModalAsync(new TjelesniNapredakList());
         }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new KupljeniPlanovi());
+        }
     }
 }

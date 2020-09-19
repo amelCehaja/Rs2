@@ -10,5 +10,6 @@ namespace Model.Requests
         public DateTime Datum { get; set; }
         public int KorisnikId { get; set; }
         public int PlanId { get; set; }
+        public int? NadkomentarId { get; set; }
     }
 }

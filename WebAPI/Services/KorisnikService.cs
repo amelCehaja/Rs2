@@ -106,6 +106,10 @@ namespace WebAPI.Services
             {
                 query = query.Where(x => x.BrojKartice == request.BrojKartice);
             }
+            else if (!string.IsNullOrWhiteSpace(request.Username))
+            {
+                query = query.Where(x => x.Username == request.Username);
+            }
             
 
             var list = query.ToList();

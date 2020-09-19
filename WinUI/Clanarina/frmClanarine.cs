@@ -92,7 +92,7 @@ namespace WinUI.Clanarina
             if(e.ColumnIndex == 4)
             {
                 int clanarinaId = Int32.Parse(dgvClanarine.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-                _service.Delete<Model.Clanarina>(clanarinaId);
+                await _service.Delete<Model.Clanarina>(clanarinaId);
                 await LoadClanarine();
             }
         }

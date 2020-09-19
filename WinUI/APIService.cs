@@ -16,6 +16,7 @@ namespace WinUI
     {
         public static string Username { get; set; }
         public static string Password { get; set; }
+        public static int UserId { get; set; }
 
         private readonly string _route;
         public APIService(string route)
@@ -101,16 +102,16 @@ namespace WinUI
             //}
 
         }
-        public  HttpStatusCode Delete<T>(int id)
+        public async Task<T> Delete<T>(int id)
         {
-            //var url = $"{Properties.Settings.Default.APIUrl}/{_route}/{id}";
-            //return await url.WithBasicAuth(Username, Password).DeleteAsync(id).ReceiveJson();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(Properties.Settings.Default.APIUrl);
-                var response = client.DeleteAsync($"api/{_route}/{id}").Result;
-                return response.StatusCode;
-            }
+            var url = $"{Properties.Settings.Default.APIUrl}/{_route}/{id}";
+            return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<T>();
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(Properties.Settings.Default.APIUrl);
+            //    var response = client.DeleteAsync($"api/{_route}/{id}").Result;
+            //    return response.StatusCode;
+            //}
         }
     }
 }

@@ -125,6 +125,18 @@
     <Compile Include="Misic\frmMisic.Designer.cs">
       <DependentUpon>frmMisic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pitanja\PitanjaList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pitanja\PitanjaList.Designer.cs">
+      <DependentUpon>PitanjaList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pitanja\Pitanje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pitanja\Pitanje.Designer.cs">
+      <DependentUpon>Pitanje.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlanIProgram\frmPlanDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +195,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Misic\frmMisic.resx">
       <DependentUpon>frmMisic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pitanja\PitanjaList.resx">
+      <DependentUpon>PitanjaList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pitanja\Pitanje.resx">
+      <DependentUpon>Pitanje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlanIProgram\frmPlanDetails.resx">
       <DependentUpon>frmPlanDetails.cs</DependentUpon>

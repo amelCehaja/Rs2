@@ -10,7 +10,7 @@
         <StackLayout>
             <StackLayout HorizontalOptions="FillAndExpand" Padding="10" VerticalOptions="CenterAndExpand">
                 <Entry Text="{Binding Username}" Placeholder="Username" PlaceholderColor="#bababa" FontSize="16"/>
-                <Entry Text="{Binding Password}" Placeholder="Password" PlaceholderColor="#bababa" FontSize="16"/>
+                <Entry Text="{Binding Password}" Placeholder="Password" IsPassword="True" PlaceholderColor="#bababa" FontSize="16"/>
                 <Button Command="{Binding LoginCommand}" Text="LogIn"/>
             </StackLayout>
             <StackLayout HorizontalOptions="Center" VerticalOptions="End" Padding="15">

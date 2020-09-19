@@ -6,6 +6,6 @@ namespace Model.Requests
 {
     public class KomentarSearchRequest
     {
-        public int PlanId { get; set; }
+        public int? PlanId { get; set; }
     }
 }
