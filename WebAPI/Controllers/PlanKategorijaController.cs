@@ -14,9 +14,9 @@ namespace WebAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PlanKategorijaController : BaseCRUDController<Model.PlanKategorija, object, PlanKategorijaInsertRequest, object>
+    public class PlanKategorijaController : BaseCRUDController<Model.PlanKategorija, PlanKategorijaSearchRequest, PlanKategorijaInsertRequest, PlanKategorija>
     {
-        public PlanKategorijaController(ICRUDService<PlanKategorija, object, PlanKategorijaInsertRequest, object> service) : base(service)
+        public PlanKategorijaController(ICRUDService<PlanKategorija, PlanKategorijaSearchRequest, PlanKategorijaInsertRequest, PlanKategorija> service) : base(service)
         {
         }
     }

@@ -78,5 +78,11 @@ namespace WinUI
             PitanjaList frm = new PitanjaList();
             frm.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmDodajKategoriju frm = new frmDodajKategoriju();
+            frm.Show();
+        }
     }
 }

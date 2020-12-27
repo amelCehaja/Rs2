@@ -464,6 +464,7 @@ namespace WebAPI.Database
                 Ime = "Amel",
                 Prezime = "Cehaja",
                 Email = "cehaja18@gmail.com",
+                BrojKartice = "11111111",
                 Spol = "M",
                 Username = "amel.cehaja",
                 Slika = File.ReadAllBytes("SlikeSeed/index.jpg"),
@@ -471,19 +472,19 @@ namespace WebAPI.Database
             };
             _clan1.PasswordHash = GenerateHash(_clan1.PasswordSalt, "password");
             modelBuilder.Entity<Korisnik>().HasData(_clan1);
-
             Korisnik _clan2 = new Korisnik
             {
                 Id = 3,
                 Ime = "Adel",
                 Prezime = "Dadic",
                 Email = "dadic123@gmail.com",
+                BrojKartice = "22222222",
                 Spol = "M",
                 Slika = File.ReadAllBytes("SlikeSeed/index.jpg"),
                 Username = "adel.dadic",
                 PasswordSalt = GenerateSalt()
             };
-            _clan1.PasswordHash = GenerateHash(_clan2.PasswordSalt, "password");
+            _clan2.PasswordHash = GenerateHash(_clan2.PasswordSalt, "password");
             modelBuilder.Entity<Korisnik>().HasData(_clan2);
 
             Korisnik _clan3 = new Korisnik
@@ -492,12 +493,13 @@ namespace WebAPI.Database
                 Ime = "Riad",
                 Prezime = "Muratspahic",
                 Email = "zmigi123@gmail.com",
+                BrojKartice = "12345678",
                 Spol = "M",
                 Username = "zmigi",
                 Slika = File.ReadAllBytes("SlikeSeed/index.jpg"),
                 PasswordSalt = GenerateSalt()
             };
-            _clan1.PasswordHash = GenerateHash(_clan3.PasswordSalt, "password");
+            _clan3.PasswordHash = GenerateHash(_clan3.PasswordSalt, "password");
             modelBuilder.Entity<Korisnik>().HasData(_clan3);
 
             //korisnikUloge

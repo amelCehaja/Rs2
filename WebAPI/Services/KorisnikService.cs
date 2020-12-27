@@ -44,7 +44,8 @@ namespace WebAPI.Services
                     foreach (var x in user.KorisnikUloga)
                     {
                         Database.Uloga uloga = _context.Uloga.Find(x.UlogaId);
-                        Model.KorisniciUloge temp = new KorisniciUloge {
+                        Model.KorisniciUloge temp = new KorisniciUloge
+                        {
                             DatumIzmjene = x.DatumIzmjene,
                             Uloga = new Uloge
                             {
@@ -60,6 +61,39 @@ namespace WebAPI.Services
                 }
             }
             return null;
+
+
+
+
+            //var user = _context.Korisnik.Where(x => x.Username == username).Include(x => x.KorisnikUloga).FirstOrDefault();
+
+            //if (user != null)
+            //{
+            //    var newHash = GenerateHash(user.PasswordSalt, pass);
+
+            //    if (newHash == user.PasswordHash)
+            //    {
+            //        var model = _mapper.Map<Model.Korisnik>(user);
+            //        model.KorisniciUloge = new List<KorisniciUloge>();
+            //        foreach (var x in user.KorisnikUloga)
+            //        {
+            //            Database.Uloga uloga = _context.Uloga.Find(x.UlogaId);
+            //            Model.KorisniciUloge temp = new KorisniciUloge {
+            //                DatumIzmjene = x.DatumIzmjene,
+            //                Uloga = new Uloge
+            //                {
+            //                    UlogaId = uloga.Id,
+            //                    Naziv = uloga.Naziv,
+            //                    Opis = uloga.Opis
+            //                },
+            //                KorisnikId = user.Id
+            //            };
+            //            model.KorisniciUloge.Add(temp);
+            //        }
+            //        return model;
+            //    }
+            //}
+            //return null;
         }
 
         public static string GenerateSalt()

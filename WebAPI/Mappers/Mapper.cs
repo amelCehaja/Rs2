@@ -48,6 +48,8 @@ namespace WebAPI.Mappers
             CreateMap<Model.KorisnikPlan, Database.KorisnikPlanIprogram>();
             CreateMap<Database.KorisnikPlanIprogram, Model.KorisnikPlan>();
             CreateMap<KorisnikPlanInsertRequest, Database.KorisnikPlanIprogram>();
+            CreateMap<Database.PlanKategorija, Model.PlanKategorija>();
+            CreateMap<Model.PlanKategorija, Database.PlanKategorija>();
         }
     }
 }

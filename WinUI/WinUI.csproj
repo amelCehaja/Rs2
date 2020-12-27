@@ -137,6 +137,12 @@
     <Compile Include="Pitanja\Pitanje.Designer.cs">
       <DependentUpon>Pitanje.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlanIProgram\frmDodajKategoriju.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlanIProgram\frmDodajKategoriju.Designer.cs">
+      <DependentUpon>frmDodajKategoriju.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlanIProgram\frmPlanDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pitanja\Pitanje.resx">
       <DependentUpon>Pitanje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlanIProgram\frmDodajKategoriju.resx">
+      <DependentUpon>frmDodajKategoriju.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlanIProgram\frmPlanDetails.resx">
       <DependentUpon>frmPlanDetails.cs</DependentUpon>
