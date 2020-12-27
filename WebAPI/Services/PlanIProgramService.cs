@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Model;
 using Model.Requests;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace WebAPI.Services
                 result.Add(planIProgram);
             });
             return result;
+        }
+        public override PlanIProgram GetByID(int id)
+        {
+            var plan = _context.PlanIprogram.Find(id);
+            return _mapper.Map<PlanIProgram>(plan);
         }
     }
 }

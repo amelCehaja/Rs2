@@ -4,6 +4,9 @@
              xmlns:vm ="clr-namespace:MobileApp.ViewModels"
              xmlns:views ="clr-namespace:MobileApp.Views"
              x:Class="MobileApp.Views.KupljeniPlanovi">
+    <ContentPage.BindingContext>
+        <vm:KupljeniPlanoviVM></vm:KupljeniPlanoviVM>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
             <views:Navigation></views:Navigation>

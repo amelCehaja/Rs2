@@ -13,7 +13,7 @@ namespace WinUI
 {
     public partial class frmLogin : Form
     {
-        APIService _service = new APIService("korisnik");
+        APIService _service = new APIService("clanarina");
         public frmLogin()
         {
             InitializeComponent();
