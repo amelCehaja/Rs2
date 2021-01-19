@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
              xmlns:views="clr-namespace:MobileApp.Views"
              x:Class="MobileApp.Views.PlanKupovinaPage">
     <ContentPage.Content>
@@ -33,10 +34,10 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Text="Card number:" Grid.Row="0" Grid.Column="0"></Label>
-                <Entry Text="{Binding CardNumber}" Grid.Row="1" Grid.ColumnSpan="3"></Entry>
+                <Entry Text="{Binding CreditCardNumber}" Grid.Row="1" Grid.ColumnSpan="3"></Entry>
                 <Label Text="CCV:" Grid.Row="2" Grid.Column="0"></Label>
                 <Entry Text="{Binding CCV}" Grid.Row="3" Grid.Column="0"></Entry>
-                <Label Text="Exp Month" Grid.Row="2" Grid.Column="0"></Label>
+                <Label Text="Exp Month" Grid.Row="2" Grid.Column="1"></Label>
                 <Entry Text="{Binding ExpMonth}" Grid.Row="3" Grid.Column="1"></Entry>
                 <Label Text="ExpYear" Grid.Row="2" Grid.Column="2"></Label>
                 <Entry Text="{Binding ExpYear}" Grid.Row="3" Grid.Column="2"></Entry>

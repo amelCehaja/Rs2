@@ -23,55 +23,56 @@ namespace MobileApp.ViewModels
         public string CCV { get; set; }
         public string ExpMonth { get; set; }
         public string ExpYear { get; set; }
-        public async Task Kupi()
+        public async Task<bool> Kupi()
         {
             if (string.IsNullOrEmpty(CreditCardNumber))
             {
                 await Application.Current.MainPage.DisplayAlert("", "Broj kartice je obavezan!","OK");
-                return;
+                return false;
             }else if (!Regex.Match(CreditCardNumber, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
             {
                 await Application.Current.MainPage.DisplayAlert("", "Kreditna kartica moze sadrzavati samo brojeve!", "OK");
-                return;
+                return false;
             }
             else if(CreditCardNumber.Length != 16)
             {
                 await Application.Current.MainPage.DisplayAlert("", "Broj kartice mora biti 16 brojeva!", "OK");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(CCV)){
                 await Application.Current.MainPage.DisplayAlert("", "CCV je obavezan!", "OK");
-                return;
+                return false;
             }
             else if(!Regex.Match(CCV, @"^[0-9]+$", RegexOptions.IgnoreCase).Success && CCV.Length != 3)
             {
                 await Application.Current.MainPage.DisplayAlert("", "CCV mora sadrzavati 3 broja!", "OK");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(ExpYear))
             {
                 await Application.Current.MainPage.DisplayAlert("", "Godian je obavezna!", "OK");
-                return;
-            }else if(!Regex.Match(CCV, @"^[0-9]+$", RegexOptions.IgnoreCase).Success && CCV.Length != 4)
+                return false;
+            }
+            else if(!Regex.Match(CCV, @"^[0-9]+$", RegexOptions.IgnoreCase).Success && CCV.Length != 4)
             {
                 await Application.Current.MainPage.DisplayAlert("", "Godina mora sadrzavati 4 broja!", "OK");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(ExpYear))
             {
                 await Application.Current.MainPage.DisplayAlert("", "Mjesec je obavezan!", "OK");
-                return;
+                return false;
             }
             else if (!Regex.Match(CCV, @"^[0-9]+$", RegexOptions.IgnoreCase).Success && Int32.Parse(CCV) > 0 && Int32.Parse(CCV) < 13  )
             {
                 await Application.Current.MainPage.DisplayAlert("", "Mjesec mogu biti samo brojevi od 1 do 12!", "OK");
-                return;
+                return false;
             }
             DateTime datum = new DateTime(Int32.Parse(ExpYear), Int32.Parse(ExpMonth), 28);
             if(DateTime.Today > datum)
             {
                 await Application.Current.MainPage.DisplayAlert("", "Kartica je istekla!", "OK");
-                return;
+                return false;
             }
 
             KorisnikPlanInsertRequest request = new KorisnikPlanInsertRequest
@@ -89,6 +90,7 @@ namespace MobileApp.ViewModels
             request.TjelesniDetaljiId = detalji[0].Id;
 
             await _planKorisnikService.Insert<object>(request);
+            return true;
         }
     }
 }

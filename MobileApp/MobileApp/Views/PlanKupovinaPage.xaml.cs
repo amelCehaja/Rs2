@@ -17,17 +17,21 @@ namespace MobileApp.Views
         public PlanKupovinaViewModel model = null;
         public PlanKupovinaPage(PlanIProgram _plan)
         {
-            InitializeComponent();
+            
             BindingContext = model = new PlanKupovinaViewModel
             {
                 PlanIProgram = _plan
             };
+            InitializeComponent();
         }
         public async void Kupi(object sender, EventArgs e)
         {
-            await model.Kupi();
-            await Application.Current.MainPage.DisplayAlert("","Transakcija uspjesno izvrsena!","OK");
-            await Navigation.PopModalAsync();
+            bool transaction = await model.Kupi();
+            if (transaction == true)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Transakcija uspjesno izvrsena!", "OK");
+                await Navigation.PopModalAsync();
+            }
         }
 
         private void Button_Clicked(object sender, EventArgs e)

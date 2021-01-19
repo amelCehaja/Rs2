@@ -24,6 +24,8 @@ namespace MobileApp.ViewModels
         public double NogaDvaWidth { get; set; }
         public double BicepsWidth { get; set; }
         public double BicepsDvaWidth { get; set; }
+        public string DatumJedan { get; set; }
+        public string DatumDva { get; set; }
 
     }
 }

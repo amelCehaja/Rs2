@@ -34,7 +34,9 @@ namespace WebAPI.Services
         public override PlanIProgram GetByID(int id)
         {
             var plan = _context.PlanIprogram.Find(id);
-            return _mapper.Map<PlanIProgram>(plan);
+            PlanIProgram planIprogram = _mapper.Map<PlanIProgram>(plan);
+            planIprogram.Kategorija = _context.PlanKategorija.Where(x => x.Id == planIprogram.KategorijaId).Select(x => x.Naziv).SingleOrDefault();
+            return planIprogram;
         }
     }
 }

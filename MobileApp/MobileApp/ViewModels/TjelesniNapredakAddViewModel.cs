@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace MobileApp.ViewModels
 {
@@ -14,55 +16,82 @@ namespace MobileApp.ViewModels
         {
 
         }
-        private double? _kilaza = null;
-        public double? Kilaza
+        private string _kilaza = null;
+        public string Kilaza
         {
             get { return _kilaza; }
             set { SetProperty(ref _kilaza, value); }
         }
-        private double? _obimBicepsa = null;
-        public double? ObimBicepsa
+        private string _obimBicepsa = null;
+        public string ObimBicepsa
         {
             get { return _obimBicepsa; }
             set { SetProperty(ref _obimBicepsa, value); }
         }
-        private double? _obimNoge = null;
-        public double? ObimNoge
+        private string _obimNoge = null;
+        public string ObimNoge
         {
             get { return _obimNoge; }
             set { SetProperty(ref _obimNoge, value); }
         }
-        private double? _obimStruka = null;
-        public double? ObimStruka
+        private string _obimStruka = null;
+        public string ObimStruka
         {
             get { return _obimStruka; }
             set { SetProperty(ref _obimStruka, value); }
         }
-        private double? _obimPrsa = null;
-        public double? ObimPrsa
+        private string _obimPrsa = null;
+        public string ObimPrsa
         {
             get { return _obimPrsa; }
             set { SetProperty(ref _obimPrsa, value); }
         }
-        private double? _tezina = null;
-        public double? Tezina
+        private string _tezina = null;
+        public string Tezina
         {
             get { return _tezina; }
             set { SetProperty(ref _tezina, value); }
         }
-        public async Task Spremi()
+        public async Task<bool> Spremi()
         {
+            if(string.IsNullOrEmpty(ObimBicepsa) || !Regex.Match(ObimBicepsa, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Obim bicepsa mora biti broj!", "OK");
+                return false;
+            }
+            if (string.IsNullOrEmpty(ObimPrsa) || !Regex.Match(ObimPrsa, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Obim prsa mora biti broj!", "OK");
+                return false;
+            }
+            if (string.IsNullOrEmpty(ObimNoge) || !Regex.Match(ObimNoge, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Obim noge mora biti broj!", "OK");
+                return false;
+            }
+            if (string.IsNullOrEmpty(ObimStruka) || !Regex.Match(ObimStruka, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Obim struka mora biti broj!", "OK");
+                return false;
+            }
+            if (string.IsNullOrEmpty(Tezina) || !Regex.Match(Tezina, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Tezina mora biti broj!", "OK");
+                return false;
+            }
+
             TjelesniDetaljiInsertRequest request = new TjelesniDetaljiInsertRequest
             {
                 Datum = DateTime.Today,
                 KorisnikId = APIService.UserId,
-                ObimBicepsa = ObimBicepsa,
-                ObimNoge = ObimNoge,
-                ObimPrsa = ObimPrsa,
-                ObimStruka = ObimStruka,
-                Tezina = Tezina
+                ObimBicepsa = Double.Parse(ObimBicepsa),
+                ObimNoge = Double.Parse(ObimNoge),
+                ObimPrsa = Double.Parse(ObimPrsa),
+                ObimStruka = Double.Parse(ObimStruka),
+                Tezina = Double.Parse(Tezina)
             };
             await _tjelesniNapredakService.Insert<object>(request);
+            return true;
         }
     }
 }

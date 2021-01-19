@@ -11,5 +11,6 @@ namespace Model.Requests
         public string Email { get; set; }
         public string BrojKartice { get; set; }
         public string Username { get; set; }
+        public string Uloga { get; set; }
     }
 }

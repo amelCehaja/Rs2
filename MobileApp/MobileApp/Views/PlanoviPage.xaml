@@ -50,6 +50,10 @@
                                        LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemTextStyle}"
                                        FontSize="16"/>
+                                <Label Text="{Binding Kategorija}"
+                                       LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="16"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

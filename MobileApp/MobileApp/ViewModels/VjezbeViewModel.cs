@@ -56,6 +56,7 @@ namespace MobileApp.ViewModels
         }
         public async Task LoadMisici()
         {
+            Misici.Clear();
             List<Misic> list = await _misicService.Get<List<Misic>>(null);
             if(list.Count > 0)
             {

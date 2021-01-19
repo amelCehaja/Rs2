@@ -12,7 +12,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClanarinaController : BaseCRUDController<Model.Clanarina, ClanarinaSearchRequest, ClanarinaInsertRequest, Model.Clanarina>

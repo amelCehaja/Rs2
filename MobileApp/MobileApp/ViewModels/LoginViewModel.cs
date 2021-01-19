@@ -50,7 +50,11 @@ namespace MobileApp.ViewModels
             {
                 APIService.Username = Username;
                 APIService.Password = Password;
-                List<Model.Korisnik> korisnici = await _service.Get<List<Model.Korisnik>>(null);
+                KorisniciSearchRequest korisniciSearchRequest = new KorisniciSearchRequest
+                {
+                    Uloga = "Sve"
+                };
+                List<Model.Korisnik> korisnici = await _service.Get<List<Model.Korisnik>>(korisniciSearchRequest);
                 APIService.UserId = korisnici.Where(x => x.Username == Username).Select(x => x.Id).SingleOrDefault();
                 TjelesniDetaljiSearchRequest request = new TjelesniDetaljiSearchRequest
                 {

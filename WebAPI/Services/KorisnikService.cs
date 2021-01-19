@@ -151,7 +151,7 @@ namespace WebAPI.Services
             foreach (var x in list)
             {
                 List<KorisnikUloga> uloge = _context.KorisnikUloga.Where(k => k.KorisnikId == x.Id && k.Uloga.Naziv == "Clan").ToList();
-                if(uloge.Count > 0)
+                if(uloge.Count > 0 || request.Uloga == "Sve")
                 {
                     tempList.Add(x);
                 }

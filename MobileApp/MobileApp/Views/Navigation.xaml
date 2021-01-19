@@ -4,7 +4,7 @@
              x:Class="MobileApp.Views.Navigation">
   <ContentView.Content>
       <StackLayout>
-            <Grid BackgroundColor="LightBlue">
+            <Grid BackgroundColor="LightBlue" MinimumHeightRequest="50">
             <Button Text="Nazad" WidthRequest="100" HorizontalOptions="Start" Clicked="Back_Clicked" TextColor="Black" ></Button>
             </Grid>
         </StackLayout>

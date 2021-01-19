@@ -11,7 +11,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Clan")]
     [Route("api/[controller]")]
     [ApiController]
     public class PrisutnostClanaController : BaseCRUDController<Model.PrisutnostClana, PrisutnostClanaSearchRequest, PrisutnostClanaInsertRequest, object>

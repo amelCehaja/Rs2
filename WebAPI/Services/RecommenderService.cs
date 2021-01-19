@@ -25,7 +25,7 @@ namespace WebAPI.Services
             
             List<Database.PlanIprogram> recomendedList = new List<Database.PlanIprogram>();
             List<Database.PlanIprogram> otherList = new List<Database.PlanIprogram>();
-            List<Database.PlanIprogram> planList = _context.PlanIprogram.ToList();
+            List<Database.PlanIprogram> planList = _context.PlanIprogram.Include(x => x.Kategorija).ToList();
             foreach (var plan in planList)
             {
                 List<int> ocjene = new List<int>();
@@ -72,6 +72,14 @@ namespace WebAPI.Services
                 Recommended = _mapper.Map<List<Model.PlanIProgram>>(recomendedList),
                 Other = _mapper.Map<List<Model.PlanIProgram>>(otherList)
             };
+            foreach(var x in model.Recommended)
+            {
+                x.Kategorija = _context.PlanKategorija.Where(y => y.Id == x.KategorijaId).Select(y => y.Naziv).SingleOrDefault();
+            }
+            foreach (var x in model.Other)
+            {
+                x.Kategorija = _context.PlanKategorija.Where(y => y.Id == x.KategorijaId).Select(y => y.Naziv).SingleOrDefault();
+            }
             return model;
         }
     }

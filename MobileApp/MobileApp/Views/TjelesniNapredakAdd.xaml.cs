@@ -23,9 +23,12 @@ namespace MobileApp.Views
         }
         public async void Spremi_Click(object Sender, EventArgs e)
         {
-            await model.Spremi();
-            await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste dodali tjelesni napredak!", "OK");
-            await Navigation.PopModalAsync();
+            bool spremiBool = await model.Spremi();
+            if (spremiBool == true)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste dodali tjelesni napredak!", "OK");
+                await Navigation.PopModalAsync();
+            }
         }
     }
 }

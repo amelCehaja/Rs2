@@ -31,7 +31,9 @@ namespace MobileApp.Views
                 PrsaWidth = getWidth(detaljiJedan.ObimPrsa,detaljiDva.ObimPrsa),
                 PrsaDvaWidth = getWidth(detaljiDva.ObimPrsa,detaljiJedan.ObimPrsa),
                 StrukWidth = getWidth(detaljiJedan.ObimStruka,detaljiDva.ObimStruka),
-                StrukDvaWidth = getWidth(detaljiDva.ObimStruka,detaljiJedan.ObimStruka)
+                StrukDvaWidth = getWidth(detaljiDva.ObimStruka,detaljiJedan.ObimStruka),
+                DatumJedan = detaljiJedan.Datum.ToString("dd.MM.yyyy"),
+                DatumDva = detaljiDva.Datum.ToString("dd.MM.yyyy")
             };
 
         }

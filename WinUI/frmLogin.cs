@@ -35,7 +35,7 @@ namespace WinUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Authentikacija", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Niste authentificirani");
             }
         }
     }

@@ -8,6 +8,9 @@
         <Button Text="Planovi i programi" Clicked="Planovi" HeightRequest="70" ></Button>
         <Button Text="Vjezbe" Clicked="Vjezbe" HeightRequest="70"></Button>
         <Button Text="Tjelesni napredak" Clicked="TjelesniNapredak" HeightRequest="70"></Button>
+        <Label IsVisible="{Binding Clan}" Text="Broj prisutnih clanova u fitnes centru:"></Label>
+        <Label IsVisible="{Binding Clan}" Text="{Binding BrojPrisutnih}"></Label>
+        <Button Text="Odjava" Clicked="Odjava" HeightRequest="70" VerticalOptions="End"></Button>
     </StackLayout>
 
 </ContentPage>

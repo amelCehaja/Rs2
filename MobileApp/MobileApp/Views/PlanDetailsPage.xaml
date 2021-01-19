@@ -14,9 +14,10 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -25,9 +26,11 @@
             <views:Navigation Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
             <Label Text="{Binding PlanIProgram.Naziv}" Padding="10,0,0,0" FontSize="20" Grid.Row="1" Grid.Column="0"></Label>
             <Label Text="{Binding Ocjena}" Grid.Row="1" Grid.Column="2" Padding="0,10,10,0" HorizontalTextAlignment="End" ></Label>
-            <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding PlanIProgram.Opis}"></Label>
+            <ScrollView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalOptions="FillAndExpand">
+                <Label Text="{Binding PlanIProgram.Opis}"></Label>
+            </ScrollView>
             <Label Grid.Row="3" Padding="10">Ocjene:</Label>
-            <ListView Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Ocjene}">
+            <ListView Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Ocjene}" HeightRequest="200">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="60">
@@ -50,10 +53,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Grid.Row="5" Grid.Column="0" Text="Ocijeni" Clicked="Ocijeni" IsVisible="{Binding Ocijenjen}"></Button>
-            <Button Grid.Row="5" Grid.Column="2" Text="Pitanja" Clicked="Pitanja"></Button>
-            <Button Grid.Row="6" Text="Kupi" Clicked="Kupi" Grid.ColumnSpan="3" BackgroundColor="LightGreen" IsVisible="{Binding PosjedujeOposite}" VerticalOptions="End"></Button>
-            <Button Grid.Row="6" Text="Pregled" Clicked="Pregled" Grid.ColumnSpan="3" BackgroundColor="LightBlue" IsVisible="{Binding Posjeduje}" VerticalOptions="End"></Button>
+            <Button Grid.Row="5" VerticalOptions="End" MinimumHeightRequest="50" Grid.Column="0" Text="Ocijeni" Clicked="Ocijeni" IsVisible="{Binding Ocijenjen}"></Button>
+            <Button Grid.Row="5" VerticalOptions="End" MinimumHeightRequest="50" Grid.Column="2" Text="Pitanja" Clicked="Pitanja"></Button>
+            <Button Grid.Row="6" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Kupi" Clicked="Kupi" Grid.ColumnSpan="3" BackgroundColor="LightGreen" IsVisible="{Binding PosjedujeOposite}"></Button>
+            <Button Grid.Row="6" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Pregled" Clicked="Pregled" Grid.ColumnSpan="3" BackgroundColor="LightBlue" IsVisible="{Binding Posjeduje}"></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
