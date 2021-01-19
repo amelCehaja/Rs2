@@ -11,7 +11,7 @@ namespace WebAPI.Services
         List<Model.Korisnik> Get(KorisniciSearchRequest request);
         Model.Korisnik Insert(KorisnikInsertRequest request);
         Model.Korisnik GetByID(int id);
-        Model.Korisnik Update(int id, KorisnikInsertRequest request);
+        Model.Korisnik Update(int id, KorisnikUpdateRequest request);
         Model.Korisnik Authenticiraj(string username, string pass);
         Model.Korisnik GetByBrojKartice(string brojKartice);
     }

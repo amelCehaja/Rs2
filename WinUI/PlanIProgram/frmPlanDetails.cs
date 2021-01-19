@@ -18,6 +18,7 @@ namespace WinUI.PlanIProgram
         private string _naziv;
         private readonly APIService _danService = new APIService("Dan");
         private readonly APIService _vjezbaService = new APIService("Vjezba");
+        private readonly APIService _setVjezbaService = new APIService("SetVjezba");
         private readonly APIService _danSetService = new APIService("DanSet");
         public frmPlanDetails(Model.PlanIProgram planIProgram)
         {
@@ -122,7 +123,7 @@ namespace WinUI.PlanIProgram
             }
         }
 
-        private void dgvVjezbe_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvVjezbe_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.ColumnIndex == 3)
             {
@@ -134,6 +135,21 @@ namespace WinUI.PlanIProgram
                 };
                 frmVjezbaSet frm = new frmVjezbaSet(danSet);
                 frm.Show();
+            }
+            else if (e.ColumnIndex == 4)
+            {
+                int _id = Int32.Parse(dgvVjezbe.Rows[e.RowIndex].Cells["Id"].Value.ToString());
+                await _danSetService.Delete<Model.DanSet>(_id);
+                SetVjezbaSearchRequest request = new SetVjezbaSearchRequest
+                {
+                    DanSetId = _id
+                };
+                List<Model.SetVjezba> entity = await _setVjezbaService.Get<List<Model.SetVjezba>>(request);
+                foreach(var x in entity)
+                {
+                    await _setVjezbaService.Delete<Model.SetVjezba>(x.Id);
+                }
+                await LoadSetovi();
             }
         }
     }

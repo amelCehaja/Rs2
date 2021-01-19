@@ -18,6 +18,7 @@
                 <RowDefinition Height="200"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -55,8 +56,8 @@
             </ListView>
             <Button Grid.Row="5" VerticalOptions="End" MinimumHeightRequest="50" Grid.Column="0" Text="Ocijeni" Clicked="Ocijeni" IsVisible="{Binding Ocijenjen}"></Button>
             <Button Grid.Row="5" VerticalOptions="End" MinimumHeightRequest="50" Grid.Column="2" Text="Pitanja" Clicked="Pitanja"></Button>
-            <Button Grid.Row="6" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Kupi" Clicked="Kupi" Grid.ColumnSpan="3" BackgroundColor="LightGreen" IsVisible="{Binding PosjedujeOposite}"></Button>
-            <Button Grid.Row="6" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Pregled" Clicked="Pregled" Grid.ColumnSpan="3" BackgroundColor="LightBlue" IsVisible="{Binding Posjeduje}"></Button>
+            <Button Grid.Row="6" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Kupi" Clicked="Kupi" Grid.ColumnSpan="3" BackgroundColor="LightGreen" TextColor="Black" IsVisible="{Binding PosjedujeOposite}"></Button>
+            <Button Grid.Row="7" VerticalOptions="EndAndExpand" MinimumHeightRequest="50" Text="Detalji" Clicked="Pregled" Grid.ColumnSpan="3" BackgroundColor="LightBlue" TextColor="Black" IsVisible="{Binding Posjeduje}"></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

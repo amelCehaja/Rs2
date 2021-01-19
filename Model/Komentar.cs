@@ -16,5 +16,6 @@ namespace Model
         public Korisnik Korisnik { get; set; }
         public string ImePrezime { get; set; }
         public string DatumString { get; set; }
+        public bool Visible { get; set; }
     }
 }

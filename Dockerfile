@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1 AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS build
 WORKDIR /src
 COPY . .
 

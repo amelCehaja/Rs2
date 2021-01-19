@@ -50,7 +50,7 @@ namespace WebAPI.Services
             else
             {
                 var list = _context.PrisutnostClana.Where(x => x.Datum > search.Od && x.Datum < search.Do).ToList();
-                result = _mapper.Map<List<Model.PrisutnostClana>>(search);
+                result = _mapper.Map<List<Model.PrisutnostClana>>(list);
             }
             return result;
         }

@@ -180,7 +180,7 @@ namespace MobileApp.ViewModels
                 Spol = Spol,
                 Email = Email,
                 Telefon = Telefon,
-                Uloga = "MobKorisnik",
+                Uloga = "AppUser",
                 Username = Username,
                 Password = Password
             };

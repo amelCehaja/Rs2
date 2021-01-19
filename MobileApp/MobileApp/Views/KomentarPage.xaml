@@ -12,9 +12,11 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="3"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
@@ -22,8 +24,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding ImePrezime}" HeightRequest="20"  ></Label>
                                 <Label Grid.Row="0" Grid.Column="1" Text="{Binding DatumString}" HeightRequest="20"></Label>
-                                <Label Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Start" VerticalOptions="Start" Text="{Binding Opis}" ></Label>
-                                <Label Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Start" VerticalOptions="Start" Padding="20,10,0,15"  Text="{Binding NadKomentar.Opis}"></Label>
+                                <Entry Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Start" VerticalOptions="Start" Text="{Binding Opis}" IsReadOnly="True" ></Entry>
+                                <Label Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Start" Text="Odgovor:" IsVisible="{Binding Visible}"></Label>
+                                <Entry Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Start" VerticalOptions="Start" IsVisible="{Binding Visible}" Text="{Binding NadKomentar.Opis}" IsReadOnly="True"></Entry>
+                                <BoxView Grid.Row="4" Grid.ColumnSpan="2" HeightRequest="3" Color="LightBlue" ></BoxView>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

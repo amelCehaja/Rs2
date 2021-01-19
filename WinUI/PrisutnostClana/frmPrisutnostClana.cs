@@ -15,6 +15,7 @@ namespace WinUI.PrisutnostClana
     public partial class frmPrisutnostClana : Form
     {
         private readonly APIService _service = new APIService("PrisutnostClana");
+        private readonly APIService _korisnikService = new APIService("Korisnik");
         private readonly APIService _clanarinaService = new APIService("Clanarina");
         public frmPrisutnostClana()
         {
@@ -46,8 +47,16 @@ namespace WinUI.PrisutnostClana
 
         private async void btnSpremi_Click(object sender, EventArgs e)
         {
-            var url = $"{ Properties.Settings.Default.APIUrl}/Korisnik/{ txtBrojKartice.Text}";
-            Model.Korisnik korisnik = await url.GetJsonAsync<Model.Korisnik>();
+            Model.Korisnik korisnik = new Model.Korisnik();
+            KorisniciSearchRequest korisniciSearchRequest = new KorisniciSearchRequest
+            {
+                BrojKartice = txtBrojKartice.Text
+            };
+            List<Model.Korisnik> korisnici = await _korisnikService.Get<List<Model.Korisnik>>(korisniciSearchRequest);
+            if(korisnici.Count == 1)
+            {
+                korisnik = korisnici[0];
+            }
             if (korisnik == null)
             {
                 MessageBox.Show("Korisnik sa unesenom karticom ne postoji!");

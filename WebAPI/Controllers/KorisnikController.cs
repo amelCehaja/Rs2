@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         }
         [Authorize]
         [HttpPut("{id}")]
-        public Model.Korisnik Update(int id, KorisnikInsertRequest request)
+        public Model.Korisnik Update(int id, [FromBody] KorisnikUpdateRequest request)
         {
             return _service.Update(id, request);
         }

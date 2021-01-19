@@ -41,7 +41,8 @@ namespace WebAPI.Services
                     KorisnikId = x.KorisnikId,
                     DatumDodavanja = x.DatumDodavanja,
                     DatumIsteka = x.DatumIsteka,
-                    TipClanarine = x.TipClanarine.Naziv + " - " + x.Cijena.ToString() + " KM"
+                    TipClanarine = x.TipClanarine.Naziv + " - " + x.Cijena.ToString() + " KM",
+                    Cijena = x.Cijena
                 }).ToList();
             }
             return clanarine;

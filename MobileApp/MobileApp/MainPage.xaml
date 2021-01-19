@@ -2,15 +2,26 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.MainPage">
-
-    <StackLayout>
-        <Button Text="Moji planovi" Clicked="Button_Clicked" HeightRequest="70"></Button>
-        <Button Text="Planovi i programi" Clicked="Planovi" HeightRequest="70" ></Button>
-        <Button Text="Vjezbe" Clicked="Vjezbe" HeightRequest="70"></Button>
-        <Button Text="Tjelesni napredak" Clicked="TjelesniNapredak" HeightRequest="70"></Button>
-        <Label IsVisible="{Binding Clan}" Text="Broj prisutnih clanova u fitnes centru:"></Label>
-        <Label IsVisible="{Binding Clan}" Text="{Binding BrojPrisutnih}"></Label>
-        <Button Text="Odjava" Clicked="Odjava" HeightRequest="70" VerticalOptions="End"></Button>
-    </StackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Grid.ColumnSpan="2" Text="Moji planovi" Clicked="Button_Clicked" HeightRequest="50"></Button>
+        <Button Grid.Row="1" Grid.ColumnSpan="2" Text="Planovi i programi" Clicked="Planovi" HeightRequest="50" ></Button>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="Vjezbe" Clicked="Vjezbe" HeightRequest="50"></Button>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Tjelesni napredak" Clicked="TjelesniNapredak" HeightRequest="50"></Button>
+        <Label Grid.Row="4" Grid.Column="0" IsVisible="{Binding Clan}" Text="Broj prisutnih clanova u fitnes centru:"></Label>
+        <Label Grid.Row="4" Grid.Column="1" IsVisible="{Binding Clan}" Text="{Binding BrojPrisutnih}"></Label>
+        <Button Grid.Row="5" VerticalOptions="End" Grid.ColumnSpan="2" Text="Odjava" Clicked="Odjava"></Button>
+    </Grid>
 
 </ContentPage>

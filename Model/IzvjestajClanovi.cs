@@ -6,7 +6,7 @@ namespace Model
 {
     public class IzvjestajClanovi
     {
-        public List<Model.Clanarina> clanarine { get; set; }
+        public List<ClanarineIzvjestaj> clanarineIzvjestaj { get; set; }
         public Dani Dani { get; set; }
     }
     public class Dani
@@ -18,5 +18,11 @@ namespace Model
         public int Petak { get; set; }
         public int Subota { get; set; }
         public int Nedelja { get; set; }
+    }
+    public class ClanarineIzvjestaj
+    {
+        public string Kategorija { get; set; }
+        public int BrojClanarina { get; set; }
+        public double Zarada { get; set; }
     }
 }

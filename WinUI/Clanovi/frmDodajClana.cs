@@ -105,7 +105,9 @@ namespace WinUI.Clanovi
                     Prezime = txtPrezime.Text,
                     Spol = cmbSpol.SelectedItem.ToString(),
                     Telefon = txtTelefon.Text,
-                    Uloga = "Clan"
+                    Uloga = "Clan",
+                    Username = "tempUsername",
+                    Password = "tempPassword"
                 };
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -161,9 +163,14 @@ namespace WinUI.Clanovi
             txtPrezime.Text = dgvClanovi.Rows[e.RowIndex].Cells["Prezime"].Value.ToString();
             txtEmail.Text = dgvClanovi.Rows[e.RowIndex].Cells["Email"].Value.ToString();
             txtBrojKartice.Text = dgvClanovi.Rows[e.RowIndex].Cells["BrojKartice"].Value.ToString();
-            txtTelefon.Text = dgvClanovi.Rows[e.RowIndex].Cells["Telefon"].Value.ToString();
+            if (dgvClanovi.Rows[e.RowIndex].Cells["Telefon"].Value != null)
+            {
+                txtTelefon.Text = dgvClanovi.Rows[e.RowIndex].Cells["Telefon"].Value.ToString();
+            }
+            else txtTelefon.Text = "";
             cmbSpol.SelectedItem = dgvClanovi.Rows[e.RowIndex].Cells["Spol"].Value.ToString();
-            dtpDatumRodenja.Value = (DateTime)dgvClanovi.Rows[e.RowIndex].Cells["DatumRodenja"].Value;
+            if (dgvClanovi.Rows[e.RowIndex].Cells["DatumRodenja"].Value != null)
+                dtpDatumRodenja.Value = (DateTime)dgvClanovi.Rows[e.RowIndex].Cells["DatumRodenja"].Value;
             byte[] slika = (byte[])dgvClanovi.Rows[e.RowIndex].Cells["Slika"].Value;
             if (slika.Length > 0)
                 pictureBox1.Image = byteArrayToImage(slika);
@@ -187,7 +194,7 @@ namespace WinUI.Clanovi
             {
                 if (ClanID != null)
                 {
-                    var request = new KorisnikInsertRequest
+                    var request = new KorisnikUpdateRequest
                     {
                         BrojKartice = txtBrojKartice.Text,
                         DatumRodenja = dtpDatumRodenja.Value.Date,
@@ -214,8 +221,9 @@ namespace WinUI.Clanovi
                         }
                     }
                     catch { }
-                    Korisnik korisnik = null;
-                    korisnik = await _service.Update<Korisnik>(ClanID ?? default(int), request);
+                    
+                    int id = ClanID ?? default(int);
+                    var korisnik = await _service.Update<Korisnik>(id, request);
                     if (korisnik != null)
                     {
                         LoadClanovi();
@@ -323,8 +331,8 @@ namespace WinUI.Clanovi
         }
 
         private void txtTelefon_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtTelefon != null && !Regex.Match(txtTelefon.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+        {       
+            if (!string.IsNullOrWhiteSpace(txtTelefon.Text) && !Regex.Match(txtTelefon.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
             {
                 errorProvider1.SetError(txtTelefon, "Dozvoljeni su samo brojevi!");
             }

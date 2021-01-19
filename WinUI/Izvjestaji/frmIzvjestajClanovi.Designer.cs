@@ -37,9 +37,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.Kategorija = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BrojClanarina = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Zarada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,6 +52,9 @@
             this.txtSub = new System.Windows.Forms.Label();
             this.txtNed = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.Kategorija = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BrojClanarina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Zarada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,9 +128,8 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(116, 398);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(0, 13);
             this.label5.TabIndex = 7;
-            this.label5.Text = "label5";
             // 
             // button1
             // 
@@ -141,24 +140,6 @@
             this.button1.Text = "Generisi";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Kategorija
-            // 
-            this.Kategorija.HeaderText = "Kategorija";
-            this.Kategorija.Name = "Kategorija";
-            this.Kategorija.ReadOnly = true;
-            // 
-            // BrojClanarina
-            // 
-            this.BrojClanarina.HeaderText = "Broj clanarina";
-            this.BrojClanarina.Name = "BrojClanarina";
-            this.BrojClanarina.ReadOnly = true;
-            // 
-            // Zarada
-            // 
-            this.Zarada.HeaderText = "Zarada";
-            this.Zarada.Name = "Zarada";
-            this.Zarada.ReadOnly = true;
             // 
             // label6
             // 
@@ -290,6 +271,27 @@
             this.label13.TabIndex = 24;
             this.label13.Text = "Prisutnost po danima";
             // 
+            // Kategorija
+            // 
+            this.Kategorija.DataPropertyName = "Kategorija";
+            this.Kategorija.HeaderText = "Kategorija";
+            this.Kategorija.Name = "Kategorija";
+            this.Kategorija.ReadOnly = true;
+            // 
+            // BrojClanarina
+            // 
+            this.BrojClanarina.DataPropertyName = "BrojClanarina";
+            this.BrojClanarina.HeaderText = "Broj clanarina";
+            this.BrojClanarina.Name = "BrojClanarina";
+            this.BrojClanarina.ReadOnly = true;
+            // 
+            // Zarada
+            // 
+            this.Zarada.DataPropertyName = "Zarada";
+            this.Zarada.HeaderText = "Zarada";
+            this.Zarada.Name = "Zarada";
+            this.Zarada.ReadOnly = true;
+            // 
             // frmIzvjestajClanovi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,9 +340,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Kategorija;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BrojClanarina;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Zarada;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
@@ -356,5 +355,8 @@
         private System.Windows.Forms.Label txtSub;
         private System.Windows.Forms.Label txtNed;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Kategorija;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BrojClanarina;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Zarada;
     }
 }

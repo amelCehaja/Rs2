@@ -233,17 +233,23 @@ namespace WebAPI.Services
             return _mapper.Map<Model.Korisnik>(entity);
         }
 
-        public Model.Korisnik Update(int id, KorisnikInsertRequest request)
+        public Model.Korisnik Update(int id, KorisnikUpdateRequest request)
         {
 
             var entity = _context.Set<Database.Korisnik>().Find(id);
             var clanSlika = entity.Slika;
+            var passSalt = entity.PasswordSalt;
+            var passHash = entity.PasswordHash;
+            var username = entity.Username;
 
             _mapper.Map(request, entity);
             if (entity.Slika.Length == 0)
             {
                 entity.Slika = clanSlika;
             }
+            entity.PasswordSalt = passSalt;
+            entity.PasswordHash = passHash;
+            entity.Username = username;
 
             _context.SaveChanges();
 

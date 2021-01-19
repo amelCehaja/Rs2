@@ -18,6 +18,9 @@ namespace MobileApp
 #if DEBUG
         private string _apiUrl = "http://localhost:55208/api";
 #endif
+#if RELEASE
+        private string _apiUrl = "http://localhost:58065/api";
+#endif       
         public APIService(string route)
         {
             _route = route;
@@ -57,7 +60,7 @@ namespace MobileApp
         public async Task<T> Insert<T>(object request)
         {
             var url = $"{_apiUrl}/{_route}";
-            var data = await url.WithBasicAuth(Username,Password).PostJsonAsync(request).ReceiveJson<T>();
+            var data = await url.WithBasicAuth(Username, Password).PostJsonAsync(request).ReceiveJson<T>();
             return data;
             //try
             //{
@@ -101,16 +104,10 @@ namespace MobileApp
             //}
 
         }
-        //public HttpStatusCode Delete<T>(int id)
-        //{
-        //    //var url = $"{Properties.Settings.Default.APIUrl}/{_route}/{id}";
-        //    //return await url.WithBasicAuth(Username, Password).DeleteAsync(id).ReceiveJson();
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri(Properties.Settings.Default.APIUrl);
-        //        var response = client.DeleteAsync($"api/{_route}/{id}").Result;
-        //        return response.StatusCode;
-        //    }
-        //}
+        public async Task<T> Delete<T>(int id)
+        {
+            var url = $"{_apiUrl}/{_route}/{id}";
+            return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<T>();
+        }
     }
 }

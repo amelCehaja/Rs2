@@ -16,6 +16,7 @@ namespace MobileApp.ViewModels
     {
         private readonly APIService _ocjenaService = new APIService("Ocjena");
         private readonly APIService _korisnikPlanService = new APIService("KorisnikPlan");
+        private readonly APIService _clanarinaService = new APIService("Clanarina");
         public PlanDetailsViewModel()
         {
             
@@ -78,6 +79,24 @@ namespace MobileApp.ViewModels
                 Posjeduje = false;
                 PosjedujeOposite = true;
             }
+
+            ClanarinaSearchRequest clanarinaSearchRequest = new ClanarinaSearchRequest
+            {
+                KorisnikId = APIService.UserId
+            };
+            List<Model.Clanarina> clanarine = await _clanarinaService.Get<List<Model.Clanarina>>(clanarinaSearchRequest);
+            if(clanarine.Count > 0)
+            {
+                foreach(var x in clanarine)
+                {
+                    if(x.DatumDodavanja<= DateTime.Today && x.DatumIsteka >= DateTime.Today)
+                    {
+                        Posjeduje = true;
+                    }
+                }
+            }
+            
+
         }
         public ICommand Ocijeni { get; set; }
         public ObservableCollection<Ocjena> Ocjene { get; set; } = new ObservableCollection<Ocjena>();

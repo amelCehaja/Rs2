@@ -11,7 +11,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class TipClanarineController : BaseCRUDController<TipClanarine, TipClanarineSearchRequest, TipClanarineInsertRequest, TipClanarineInsertRequest>

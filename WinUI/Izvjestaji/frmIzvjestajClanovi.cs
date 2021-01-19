@@ -1,4 +1,5 @@
-﻿using Model.Requests;
+﻿using Model;
+using Model.Requests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,9 +26,10 @@ namespace WinUI.Izvjestaji
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            double _zarada = 0;
             Model.IzvjestajClanovi izvjestajClanovi = new Model.IzvjestajClanovi
             {
-                clanarine = new List<Model.Clanarina>(),
+                clanarineIzvjestaj = new List<ClanarineIzvjestaj>(),
                 Dani = new Model.Dani
                 {
                     Ponedeljak = 0,
@@ -47,10 +49,31 @@ namespace WinUI.Izvjestaji
             List<Model.Clanarina> clanarine = await _clanarinaService.Get<List<Model.Clanarina>>(clanarinaSearch);
             foreach (var x in clanarine)
             {
-                izvjestajClanovi.clanarine.Add(x);
+                bool categoryExists = false;
+                for(int i = 0; i< izvjestajClanovi.clanarineIzvjestaj.Count; i++)
+                {
+                    if(izvjestajClanovi.clanarineIzvjestaj[i].Kategorija == x.TipClanarine)
+                    {
+                        izvjestajClanovi.clanarineIzvjestaj[i].BrojClanarina+=1;
+                        izvjestajClanovi.clanarineIzvjestaj[i].Zarada += x.Cijena;
+                        categoryExists = true;
+                    }
+                }
+                if(categoryExists == false)
+                {
+                    ClanarineIzvjestaj _cizv = new ClanarineIzvjestaj
+                    {
+                        Kategorija = x.TipClanarine,
+                        BrojClanarina = 1,
+                        Zarada = x.Cijena
+                    };
+                    izvjestajClanovi.clanarineIzvjestaj.Add(_cizv);
+                }
+                _zarada += x.Cijena;
             }
+            label5.Text = _zarada.ToString() + " KM";
 
-            dataGridView1.DataSource = izvjestajClanovi;
+            dataGridView1.DataSource = izvjestajClanovi.clanarineIzvjestaj;
             PrisutnostClanaSearchRequest prisutnostClanaSearch = new PrisutnostClanaSearchRequest { Od = dateTimePicker1.Value, Do = dateTimePicker2.Value };
             List<Model.PrisutnostClana> prisutnostClana = await _prisutnostService.Get<List<Model.PrisutnostClana>>(prisutnostClanaSearch);
             foreach (var x in prisutnostClana)
@@ -83,7 +106,6 @@ namespace WinUI.Izvjestaji
                 }
             }
             dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = clanarine;
             txtPon.Text = izvjestajClanovi.Dani.Ponedeljak.ToString();
             txtUto.Text = izvjestajClanovi.Dani.Utorak.ToString();
             txtSri.Text = izvjestajClanovi.Dani.Srijeda.ToString();

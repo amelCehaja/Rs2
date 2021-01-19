@@ -46,6 +46,11 @@ namespace MobileApp.ViewModels
                     x.ImePrezime = x.Korisnik.Ime + " " + x.Korisnik.Prezime;
                     x.DatumString = x.Datum.ToString("dd.MM.yyyy");
                     Komentari.Add(x);
+                    if (x.NadKomentar == null)
+                    {
+                        x.Visible = false;
+                    }
+                    else x.Visible = true;
                 }
             }
         }

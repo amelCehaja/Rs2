@@ -21,7 +21,7 @@ namespace Model.Requests
         [RegularExpression(@"[MŽ]")]
         public string Spol { get; set; }
         [Required(AllowEmptyStrings = false)]
-        [RegularExpression(@"^[\w -\.] +@([\w -] +\.)+[\w-]{2,4}$")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")]
         public string Email { get; set; }
         [RegularExpression(@"^[0-9]+$")]
         public string Telefon { get; set; }

@@ -23,5 +23,11 @@ namespace MobileApp.Views
                 Detalji = detalji
             };
         }
+        public async void Obrisi(object Sender, EventArgs e)
+        {
+            await model.Obrisi();
+            await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste obrisali tjelesni napredak!", "OK");
+            await Navigation.PopModalAsync();
+        }
     }
 }
