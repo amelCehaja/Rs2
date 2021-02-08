@@ -404,5 +404,18 @@ namespace WinUI.Clanovi
             frmListaClanova frm = new frmListaClanova();
             frm.Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.AddExtension = true;
+            openFileDialog.Filter = "JPG files (*.jpg) | *.jpg";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image = new Bitmap(openFileDialog.FileName);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+        }
     }
 }
