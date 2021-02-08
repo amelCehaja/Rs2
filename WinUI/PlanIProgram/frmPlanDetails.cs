@@ -150,6 +150,7 @@ namespace WinUI.PlanIProgram
                     await _setVjezbaService.Delete<Model.SetVjezba>(x.Id);
                 }
                 await LoadSetovi();
+                await LoadRedniBrojevi(_danId);
             }
         }
     }

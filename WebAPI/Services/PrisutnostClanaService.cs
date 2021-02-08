@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account.Manage;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Model.Requests;
 using System;
 using System.Collections.Generic;
@@ -34,16 +35,21 @@ namespace WebAPI.Services
                     Ime = x.Korisnik.Ime,
                     KorisnikId = x.KorisnikId,
                     Prezime = x.Korisnik.Prezime,
-                    VrijemeDolaska = x.VrijemeDolaska
+                    VrijemeDolaska = x.VrijemeDolaska,
+                    Slika = x.Korisnik.Slika
                 }).ToList();
 
                 result.ForEach(x =>
                 {
-                    List<Database.Clanarina> clanarine = _context.Clanarina.Where(y => y.KorisnikId == x.KorisnikId).ToList();
+                    List<Database.Clanarina> clanarine = _context.Clanarina.Where(y => y.KorisnikId == x.KorisnikId).Include(y => y.TipClanarine).ToList();
                     clanarine.ForEach(c =>
                     {
                         if (c.DatumDodavanja < DateTime.Today && c.DatumIsteka > DateTime.Today)
+                        {
                             x.Aktivan = true;
+                            x.TipClanarine = c.TipClanarine.Naziv;
+                            x.VrijediDo = c.DatumIsteka.ToString("dd.MM.yyyy");
+                        }
                     });
                 });
             }

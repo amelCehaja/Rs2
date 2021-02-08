@@ -18,24 +18,26 @@ namespace WinUI.TipoviClanarine
     {
         private readonly APIService _apiService = new APIService("tipClanarine");
         private int? TipClanarineId;
-        public frmTipoviClanarine()
+        public frmTipoviClanarine(int? _tipClanarine)
         {
+            TipClanarineId = _tipClanarine;
             InitializeComponent();
         }
-        private async void LoadTipoveClanarina()
+
+        private async void frmTipoviClanarine_Load(object sender, EventArgs e)
         {
-            var result = await _apiService.Get<List<Model.TipClanarine>>(null);
-            dgvTipoviClanarina.DataSource = result;
+           if(TipClanarineId != null)
+            {
+                var tipClanarine = await _apiService.GetById<TipClanarine>(TipClanarineId);
+                txtNaziv.Text = tipClanarine.Naziv;
+                txtCijena.Text = tipClanarine.Cijena.ToString();
+                txtTrajanje.Text = tipClanarine.Trajanje.ToString();
+            }
         }
 
-        private void frmTipoviClanarine_Load(object sender, EventArgs e)
+        private async void Novi()
         {
-            LoadTipoveClanarina();
-        }
-
-        private async void btnNoviTipClanarine_Click(object sender, EventArgs e)
-        {
-            if (ValidateChildren())
+            if (this.ValidateChildren())
             {
                 TipClanarineInsertRequest request = new TipClanarineInsertRequest
                 {
@@ -49,21 +51,12 @@ namespace WinUI.TipoviClanarine
                 if (entity != null)
                 {
                     MessageBox.Show("Uspjesno ste dodali tip clanarine!");
-                    LoadTipoveClanarina();
-                    Clear();
+                    this.Close();
                 }
             }
         }
 
-        private void dgvTipoviClanarina_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            TipClanarineId = Int32.Parse(dgvTipoviClanarina.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-            txtNaziv.Text = dgvTipoviClanarina.Rows[e.RowIndex].Cells["Naziv"].Value.ToString();
-            txtCijena.Text = dgvTipoviClanarina.Rows[e.RowIndex].Cells["Cijena"].Value.ToString();
-            txtTrajanje.Text = dgvTipoviClanarina.Rows[e.RowIndex].Cells["Trajanje"].Value.ToString();
-        }
-
-        private async void btnUpdate_Click(object sender, EventArgs e)
+        private async void Izmjeni()
         {
             if (ValidateChildren())
             {
@@ -80,8 +73,7 @@ namespace WinUI.TipoviClanarine
                     if (tipClanarine != null)
                     {
                         MessageBox.Show("Uspjesno ste izmjenili tip clanarine!");
-                        LoadTipoveClanarina();
-                        Clear();
+                        this.Close();
                     }
                 }
                 else
@@ -91,41 +83,69 @@ namespace WinUI.TipoviClanarine
             }
         }
 
-        private async void txtNaziv_Validating(object sender, CancelEventArgs e)
+        private async Task<bool> NazivExists()
         {
-            if (string.IsNullOrWhiteSpace(txtNaziv.Text))
-                errorProvider1.SetError(txtNaziv, Resources.Validation_Required);
-            else if (txtNaziv.Text.Length > 25)
-                errorProvider1.SetError(txtNaziv, "Maksimalna dozvoljena duzina je 25 karaktera!");
-            else
-                errorProvider1.SetError(txtNaziv, null);
             TipClanarineSearchRequest request = new TipClanarineSearchRequest
             {
                 Naziv = txtNaziv.Text
             };
             List<Model.TipClanarine> list = await _apiService.Get<List<TipClanarine>>(request);
-            if(list.Count>0 && TipClanarineId == null)
+            if (list.Count > 0 && TipClanarineId == null)
             {
-                errorProvider1.SetError(txtNaziv, "Naziv vec postoji!");
+                return true;
             }
-            else if(list.Count>0 && TipClanarineId!= null)
+            else if (list.Count > 0 && TipClanarineId != null)
             {
-                if(list[0].Id != TipClanarineId)
+                if (list[0].Id != TipClanarineId)
                 {
-                    errorProvider1.SetError(txtNaziv, "Naziv vec postoji!");
+                    return true;
                 }
             }
+            return false;
+        }
 
+        private async void txtNaziv_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNaziv.Text))
+            {
+                errorProvider1.SetError(txtNaziv, Resources.Validation_Required);
+                e.Cancel = true;
+            }
+            else if (txtNaziv.Text.Length > 25)
+            {
+                errorProvider1.SetError(txtNaziv, "Maksimalna dozvoljena duzina je 25 karaktera!");
+                e.Cancel = true;
+            }
+            else if(!string.IsNullOrWhiteSpace(txtNaziv.Text) && txtNaziv.Text.Length <= 25)
+            {
+                var exists = await NazivExists();
+                if(exists == true)
+                {
+                    errorProvider1.SetError(txtNaziv, "Naziv postoji!");
+                    e.Cancel = true;
+                }
+            }
+            else
+                errorProvider1.SetError(txtNaziv, null);
         }
 
         private void txtCijena_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCijena.Text))
+            {
                 errorProvider1.SetError(txtCijena, Resources.Validation_Required);
+                e.Cancel = true;
+            }
             else if (!Regex.Match(txtCijena.Text, @"^[0-9.]+$", RegexOptions.IgnoreCase).Success)
+            {
                 errorProvider1.SetError(txtCijena, "Dozvoljeni su samo brojevi sa . !");
+                e.Cancel = true;
+            }
             else if (double.Parse(txtCijena.Text) < 0 || double.Parse(txtCijena.Text) > double.MaxValue)
+            {
                 errorProvider1.SetError(txtCijena, "Dozvoljeni su samo pozitivni brojevi");
+                e.Cancel = true;
+            }
             else
                 errorProvider1.SetError(txtCijena, null);
         }
@@ -133,9 +153,22 @@ namespace WinUI.TipoviClanarine
         private void txtTrajanje_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTrajanje.Text))
+            {
                 errorProvider1.SetError(txtTrajanje, Resources.Validation_Required);
+                e.Cancel = true;
+            }
             else if (!Regex.Match(txtTrajanje.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+            {
                 errorProvider1.SetError(txtTrajanje, "Dozvoljeni su samo brojevi!");
+                e.Cancel = true;
+            }
+            else if (txtTrajanje.Text.Length > Int32.MaxValue.ToString().Length)
+            {
+                errorProvider1.SetError(txtTrajanje, "Uneseni broj je prevelik!");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.SetError(txtTrajanje, null);
         }
 
         private void Clear()
@@ -144,6 +177,24 @@ namespace WinUI.TipoviClanarine
             txtNaziv.Text = "";
             txtCijena.Text = "";
             txtTrajanje.Text = "";
+        }
+
+        private async void btnUpdate_Click(object sender, EventArgs e)
+        {
+            var exists = await NazivExists();
+            if (exists == false)
+            {
+                if (TipClanarineId == null)
+                    Novi();
+                else
+                    Izmjeni();
+            }
+        }
+
+        private void frmTipoviClanarine_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmListaTipovaClanarine frmListaTipovaClanarine = new frmListaTipovaClanarine();
+            frmListaTipovaClanarine.Show();
         }
     }
 }

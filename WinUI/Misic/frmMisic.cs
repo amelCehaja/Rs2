@@ -15,64 +15,97 @@ namespace WinUI.Misic
     public partial class frmMisic : Form
     {
         private readonly APIService _service = new APIService("Misic");
-        private int? MisicId;
-        public frmMisic()
+        private int? _misicId;
+        public frmMisic(int? MisicId)
         {
+            _misicId = MisicId;
             InitializeComponent();
-        }
-
-        private async Task LoadMisici()
-        {
-            List<Model.Misic> result = await _service.Get<List<Model.Misic>>(null);
-            dgvMisici.AutoGenerateColumns = false;
-            dgvMisici.DataSource = result;
-        }
+        }     
 
         private async void Misic_Load(object sender, EventArgs e)
         {
-            await LoadMisici();
+            if(_misicId != null)
+            {
+                var _misic = await _service.GetById<Model.Misic>(_misicId);
+                txtNaziv.Text = _misic.Naziv;
+            }
         }
 
-        private async void btnNovi_Click(object sender, EventArgs e)
+        private async void Novi()
         {
             if (ValidateChildren())
             {
-                MisicInsertRequest request = new MisicInsertRequest
+                var _misicExists = await MisicExists(true);
+                if (_misicExists == false)
                 {
-                    Naziv = txtNaziv.Text
-                };
-                Model.Misic entity = null;
-                entity = await _service.Insert<Model.Misic>(request);
-                if (entity != null)
-                {
-                    MessageBox.Show("Uspjesno ste dodali misic!");
-                    await LoadMisici();
-                    Clear();
+                    MisicInsertRequest request = new MisicInsertRequest
+                    {
+                        Naziv = txtNaziv.Text
+                    };
+                    Model.Misic entity = null;
+                    entity = await _service.Insert<Model.Misic>(request);
+                    if (entity != null)
+                    {
+                        MessageBox.Show("Uspjesno ste dodali misic!");
+                        this.Close();
+                    }
                 }
             }
         }
 
-        private async void btnIzmjeni_Click(object sender, EventArgs e)
+        private async Task<bool> MisicExists(bool New)
         {
-            if (ValidateChildren())
+            int? misicId = null;
+            if(New == false)
             {
-                if (MisicId == null)
+                misicId = _misicId;
+            }
+            if (!String.IsNullOrWhiteSpace(txtNaziv.Text))
+            {
+                MisicSearchRequest request = new MisicSearchRequest
+                {
+                    Naziv = txtNaziv.Text
+                };
+                var list = await _service.Get<List<Model.Misic>>(request);
+                if (list.Count > 0 && misicId == null)
+                {
+                    errorProvider1.SetError(txtNaziv, "Misic vec postoji!");
+                    return true;
+                }
+                else if (list.Count > 0 && _misicId != null)
+                {
+                    if (list[0].Id != misicId)
+                    {
+                        errorProvider1.SetError(txtNaziv, "Misic vec postoji!");
+                        return true;
+                    }
+                }
+            }
+            errorProvider1.SetError(txtNaziv, null);
+            return false;
+        }
+
+        private async void Izmjeni()
+        {
+            var _misicExists = await MisicExists(false);
+            if (ValidateChildren() && _misicExists == false)
+            {
+                if (_misicId == null)
                 {
                     MessageBox.Show("Niste odabrali misic za izmjenu!");
                     return;
                 }
                 Model.Misic request = new Model.Misic
                 {
-                    Id = MisicId ?? default,
+                    Id = _misicId ?? default,
                     Naziv = txtNaziv.Text
                 };
                 Model.Misic entity = null;
-                entity = await _service.Update<Model.Misic>(MisicId ?? default, request);
+                entity = await _service.Update<Model.Misic>(_misicId ?? default, request);
                 if (entity != null)
                 {
                     MessageBox.Show("Uspjesno ste izmjenili misic!");
-                    await LoadMisici();
-                    Clear();
+                    this.Close();
                 }
             }
         }
@@ -80,39 +113,35 @@ namespace WinUI.Misic
         private void Clear()
         {
             txtNaziv.Text = "";
-            MisicId = null;
+            _misicId = null;
         }
 
-        private void dgvMisici_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void txtNaziv_Validating(object sender, CancelEventArgs e)
         {
-            MisicId = Int32.Parse(dgvMisici.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-            txtNaziv.Text = dgvMisici.Rows[e.RowIndex].Cells["Naziv"].Value.ToString();
-        }
-        private async void txtNaziv_Validate(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtNaziv.Text))
+
+            if (String.IsNullOrWhiteSpace(txtNaziv.Text))
             {
-                errorProvider1.SetError(txtNaziv, Resources.Validation_Required);
+                errorProvider1.SetError(txtNaziv, "Naziv ne moze biti prazan!");
+                e.Cancel = true;
             }
             else
             {
-                MisicSearchRequest request = new MisicSearchRequest
-                {
-                    Naziv = txtNaziv.Text
-                };
-                var list = await _service.Get<List<Model.Misic>>(request);
-                if (list.Count > 0 && MisicId == null)
-                {
-                    errorProvider1.SetError(txtNaziv, "Naziv postoji u bazi!");
-                }
-                else if (list.Count > 0 && MisicId != null)
-                {
-                    if (list[0].Id != MisicId)
-                    {
-                        errorProvider1.SetError(txtNaziv, "Naziv postoji u bazi!");
-                    }
-                }
+                errorProvider1.SetError(txtNaziv, null);
             }
+        }
+
+        private void btnNovi_Click(object sender, EventArgs e)
+        {
+            if (_misicId == null)
+                Novi();
+            else
+                Izmjeni();
+        }
+
+        private void frmMisic_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmListaMisica frmListaMisica = new frmListaMisica();
+            frmListaMisica.Show();
         }
     }
 }

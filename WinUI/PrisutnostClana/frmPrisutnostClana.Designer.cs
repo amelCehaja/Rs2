@@ -33,10 +33,12 @@
             this.btnSpremi = new System.Windows.Forms.Button();
             this.dgvPrisutnost = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Slika = new System.Windows.Forms.DataGridViewImageColumn();
             this.Ime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Prezime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VrijemeDolaska = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VrijemeOdlaska = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TipClanarine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VrijediDo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Aktivan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrisutnost)).BeginInit();
             this.SuspendLayout();
@@ -74,15 +76,18 @@
             this.dgvPrisutnost.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPrisutnost.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
+            this.Slika,
             this.Ime,
             this.Prezime,
             this.VrijemeDolaska,
-            this.VrijemeOdlaska,
+            this.TipClanarine,
+            this.VrijediDo,
             this.Aktivan});
             this.dgvPrisutnost.Location = new System.Drawing.Point(26, 65);
             this.dgvPrisutnost.Name = "dgvPrisutnost";
             this.dgvPrisutnost.ReadOnly = true;
-            this.dgvPrisutnost.Size = new System.Drawing.Size(358, 426);
+            this.dgvPrisutnost.RowTemplate.Height = 70;
+            this.dgvPrisutnost.Size = new System.Drawing.Size(653, 426);
             this.dgvPrisutnost.TabIndex = 3;
             // 
             // Id
@@ -92,6 +97,14 @@
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
+            // 
+            // Slika
+            // 
+            this.Slika.DataPropertyName = "Slika";
+            this.Slika.HeaderText = "Slika";
+            this.Slika.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Slika.Name = "Slika";
+            this.Slika.ReadOnly = true;
             // 
             // Ime
             // 
@@ -114,13 +127,19 @@
             this.VrijemeDolaska.Name = "VrijemeDolaska";
             this.VrijemeDolaska.ReadOnly = true;
             // 
-            // VrijemeOdlaska
+            // TipClanarine
             // 
-            this.VrijemeOdlaska.DataPropertyName = "VrijemeOdlaska";
-            this.VrijemeOdlaska.HeaderText = "VrijemeOdlaska";
-            this.VrijemeOdlaska.Name = "VrijemeOdlaska";
-            this.VrijemeOdlaska.ReadOnly = true;
-            this.VrijemeOdlaska.Visible = false;
+            this.TipClanarine.DataPropertyName = "TipClanarine";
+            this.TipClanarine.HeaderText = "Tip Clanarine";
+            this.TipClanarine.Name = "TipClanarine";
+            this.TipClanarine.ReadOnly = true;
+            // 
+            // VrijediDo
+            // 
+            this.VrijediDo.DataPropertyName = "VrijediDo";
+            this.VrijediDo.HeaderText = "Vrijedi do";
+            this.VrijediDo.Name = "VrijediDo";
+            this.VrijediDo.ReadOnly = true;
             // 
             // Aktivan
             // 
@@ -134,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 503);
+            this.ClientSize = new System.Drawing.Size(694, 503);
             this.Controls.Add(this.dgvPrisutnost);
             this.Controls.Add(this.btnSpremi);
             this.Controls.Add(this.txtBrojKartice);
@@ -155,10 +174,12 @@
         private System.Windows.Forms.Button btnSpremi;
         private System.Windows.Forms.DataGridView dgvPrisutnost;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewImageColumn Slika;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ime;
         private System.Windows.Forms.DataGridViewTextBoxColumn Prezime;
         private System.Windows.Forms.DataGridViewTextBoxColumn VrijemeDolaska;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VrijemeOdlaska;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TipClanarine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VrijediDo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Aktivan;
     }
 }

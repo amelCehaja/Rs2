@@ -18,52 +18,59 @@ namespace WinUI.PlanIProgram
         private readonly APIService _service = new APIService("PlanKategorija");
         private int? _kategorijaId;
 
-        public frmDodajKategoriju()
+        public frmDodajKategoriju(int? id)
         {
+            _kategorijaId = id;
             InitializeComponent();
         }
 
         private async void frmDodajKategoriju_Load(object sender, EventArgs e)
         {
-            await LoadKategorije();
-        }
-        private async Task LoadKategorije()
-        {
-            List<Model.PlanKategorija> kategorije = await _service.Get<List<Model.PlanKategorija>>(null);
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = kategorije;
+           if(_kategorijaId != null)
+            {
+                Model.PlanKategorija kategorija = await _service.GetById<Model.PlanKategorija>(_kategorijaId);
+                textBox1.Text = kategorija.Naziv;
+            }
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async Task<bool> NazivExists()
         {
-            _kategorijaId = Int32.Parse(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["Naziv"].Value.ToString();
+            PlanKategorijaSearchRequest request = new PlanKategorijaSearchRequest
+            {
+                Naziv = textBox1.Text
+            };
+            var list = await _service.Get<List<Model.PlanKategorija>>(request);
+            if (list.Count > 0 && _kategorijaId == null)
+            {
+                return true;
+            }
+            else if (list.Count > 0 && _kategorijaId != null)
+            {
+                if (list[0].Id != _kategorijaId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-
+        
         private async void textBox1_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 errorProvider1.SetError(textBox1, Resources.Validation_Required);
+                e.Cancel = true;
             }
-            else
+            else if(!string.IsNullOrWhiteSpace(textBox1.Text))
             {
-                PlanKategorijaSearchRequest request = new PlanKategorijaSearchRequest
+                bool exists = await NazivExists();
+                if(exists == true)
                 {
-                    Naziv = textBox1.Text
-                };
-                var list = await _service.Get<List<Model.PlanKategorija>>(request);
-                if (list.Count > 0 && _kategorijaId == null)
-                {
-                    errorProvider1.SetError(textBox1, "Naziv postoji u bazi!");
+                    errorProvider1.SetError(textBox1, "Naziv postoji!");
+                    e.Cancel = true;
                 }
-                else if (list.Count > 0 && _kategorijaId != null)
-                {
-                    if (list[0].Id != _kategorijaId)
-                    {
-                        errorProvider1.SetError(textBox1, "Naziv postoji u bazi!");
-                    }
-                }
+                else
+                    errorProvider1.SetError(textBox1, null);
             }
         }
 
@@ -73,7 +80,7 @@ namespace WinUI.PlanIProgram
             _kategorijaId = null;
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async Task Novi()
         {
             if (ValidateChildren())
             {
@@ -86,13 +93,12 @@ namespace WinUI.PlanIProgram
                 if (entity != null)
                 {
                     MessageBox.Show("Uspjesno ste dodali misic!");
-                    await LoadKategorije();
-                    Clear();
+                    this.Close();
                 }
             }
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async Task Izmjena()
         {
             if (ValidateChildren())
             {
@@ -111,10 +117,27 @@ namespace WinUI.PlanIProgram
                 if (entity != null)
                 {
                     MessageBox.Show("Uspjesno ste izmjenili kategoriju!");
-                    await LoadKategorije();
-                    Clear();
+                    this.Close();
                 }
             }
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            bool exists = await NazivExists();
+            if(exists == false)
+            {
+                if (_kategorijaId == null)
+                    await Novi();
+                else
+                    await Izmjena();
+            }
+        }
+
+        private void frmDodajKategoriju_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmListaKategorijaPiP frm = new frmListaKategorijaPiP();
+            frm.Show();
         }
     }
 }

@@ -19,10 +19,16 @@ namespace WebAPI.Services
             var query = _context.Set<Misic>().AsQueryable();
             if(search.Naziv != null)
             {
-                query.Where(x => x.Naziv == search.Naziv);
+                query = query.Where(x => x.Naziv == search.Naziv);
             }
             var list = query.ToList();
             return _mapper.Map<List<Model.Misic>>(list);
+        }
+
+        public override Model.Misic GetByID(int id)
+        {
+            Misic misic = _context.Misic.Find(id);
+            return _mapper.Map<Model.Misic>(misic);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace WebAPI
             services.AddScoped<ICRUDService<Model.PrisutnostClana, PrisutnostClanaSearchRequest, PrisutnostClanaInsertRequest, object>, PrisutnostClanaService>();
             services.AddScoped<ICRUDService<Model.Misic, MisicSearchRequest, MisicInsertRequest, Model.Misic>, MisicService>();
             services.AddScoped<ICRUDService<Model.Vjezba, VjezbaSearchRequest, VjezbaInsertRequest, VjezbaInsertRequest>, VjezbaService>();
-            services.AddScoped<ICRUDService<Model.PlanIProgram, PlanIProgramSearchRequest, PlanIProgramInsertRequest, object>, PlanIProgramService>();
+            services.AddScoped<ICRUDService<Model.PlanIProgram, PlanIProgramSearchRequest, PlanIProgramInsertRequest, PlanIProgramUpdateRequest>, PlanIProgramService>();
             services.AddScoped<ICRUDService<Model.PlanKategorija, PlanKategorijaSearchRequest, PlanKategorijaInsertRequest, Model.PlanKategorija>, PlanKategorijaService>();
             services.AddScoped<ICRUDService<Model.Dan, DanSearchRequest, DanInsertRequest, object>, DanService>();
             services.AddScoped<ICRUDService<Model.DanSet, DanSetSearchRequest, DanSetInsertRequest, object>, DanSetService>();

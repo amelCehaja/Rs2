@@ -29,9 +29,11 @@ namespace WinUI.Clanovi
         int? ClanID = null;
         private Thread camera;
         bool isCameraRunning = false;
-        public frmDodajClana()
+        public frmDodajClana(int? ClanId)
         {
+            ClanID = ClanId;
             InitializeComponent();
+            
         }
         private void CaptureCamera()
         {
@@ -78,13 +80,15 @@ namespace WinUI.Clanovi
 
         private void btnUslikaj_Click(object sender, EventArgs e)
         {
-            if (isCameraRunning)
+            if (isCameraRunning && pictureBox1.Image != null)
             {
-                // Take snapshot of the current image generate by OpenCV in the Picture Box
-                Bitmap snapshot = new Bitmap(pictureBox1.Image);
-                pictureBox1.Image = snapshot;
-                btnStart.Text = "Start";
-                isCameraRunning = false;
+               
+                    // Take snapshot of the current image generate by OpenCV in the Picture Box
+                    Bitmap snapshot = new Bitmap(pictureBox1.Image);
+                    pictureBox1.Image = snapshot;
+                    btnStart.Text = "Start";
+                    isCameraRunning = false;
+               
             }
             else
             {
@@ -92,7 +96,7 @@ namespace WinUI.Clanovi
             }
         }
 
-        private async void btnSpremi_Click(object sender, EventArgs e)
+        private async void SpremiNovogClana()
         {
             if (ValidateChildren())
             {
@@ -122,58 +126,40 @@ namespace WinUI.Clanovi
                 }
                 Korisnik entity = null;
                 entity = await _service.Insert<Korisnik>(request);
-                LoadClanovi();
                 if (entity != null)
                 {
                     MessageBox.Show("Uspješno izvršeno");
-                    Clear();
+                    this.Close();
                 }
             }
         }
 
-        private void frmDodajClana_Load(object sender, EventArgs e)
+        private async void frmDodajClana_Load(object sender, EventArgs e)
         {
             cmbSpol.Items.Add("M");
             cmbSpol.Items.Add("Ž");
             cmbSpol.SelectedIndex = 0;
-            LoadClanovi();
-        }
-
-        private void btnPretrazi_Click(object sender, EventArgs e)
-        {
-            LoadClanovi();
-        }
-        private async void LoadClanovi()
-        {
-            var search = new KorisniciSearchRequest()
+               
+            if(ClanID != null)
             {
-                Ime = txtSearchIme.Text,
-                Prezime = txtSearchPrezime.Text
-            };
-            var result = await _service.Get<List<Korisnik>>(search);
-
-            dgvClanovi.AutoGenerateColumns = false;
-            dgvClanovi.DataSource = result;
-        }
-
-        private void dgvClanovi_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            ClanID = Convert.ToInt32(dgvClanovi.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-            txtIme.Text = dgvClanovi.Rows[e.RowIndex].Cells["Ime"].Value.ToString();
-            txtPrezime.Text = dgvClanovi.Rows[e.RowIndex].Cells["Prezime"].Value.ToString();
-            txtEmail.Text = dgvClanovi.Rows[e.RowIndex].Cells["Email"].Value.ToString();
-            txtBrojKartice.Text = dgvClanovi.Rows[e.RowIndex].Cells["BrojKartice"].Value.ToString();
-            if (dgvClanovi.Rows[e.RowIndex].Cells["Telefon"].Value != null)
-            {
-                txtTelefon.Text = dgvClanovi.Rows[e.RowIndex].Cells["Telefon"].Value.ToString();
+                KorisniciSearchRequest request = new KorisniciSearchRequest
+                {
+                    Id = ClanID
+                };
+                var korisnici = await _service.Get<List<Korisnik>>(request);
+                Korisnik korisnik = korisnici[0];
+                txtIme.Text = korisnik.Ime;
+                txtPrezime.Text = korisnik.Prezime;
+                txtEmail.Text = korisnik.Email;
+                txtBrojKartice.Text = korisnik.BrojKartice;
+                txtTelefon.Text = korisnik.Telefon;
+                cmbSpol.SelectedItem = korisnik.Spol;
+                if(korisnik.DatumRodenja != null)
+                    dtpDatumRodenja.Value = korisnik.DatumRodenja.Value;
+                byte[] slika = korisnik.Slika;
+                if (slika.Length > 0)
+                    pictureBox1.Image = byteArrayToImage(slika);
             }
-            else txtTelefon.Text = "";
-            cmbSpol.SelectedItem = dgvClanovi.Rows[e.RowIndex].Cells["Spol"].Value.ToString();
-            if (dgvClanovi.Rows[e.RowIndex].Cells["DatumRodenja"].Value != null)
-                dtpDatumRodenja.Value = (DateTime)dgvClanovi.Rows[e.RowIndex].Cells["DatumRodenja"].Value;
-            byte[] slika = (byte[])dgvClanovi.Rows[e.RowIndex].Cells["Slika"].Value;
-            if (slika.Length > 0)
-                pictureBox1.Image = byteArrayToImage(slika);
         }
 
         private Image byteArrayToImage(byte[] byteArray)
@@ -190,57 +176,61 @@ namespace WinUI.Clanovi
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (ValidateChildren())
+            var _emailExists = await EmailExixsts();
+            var _karticaExists = await KarticaExists();
+
+            if (ValidateChildren() && _emailExists == false && _karticaExists == false)
             {
                 if (ClanID != null)
                 {
-                    var request = new KorisnikUpdateRequest
-                    {
-                        BrojKartice = txtBrojKartice.Text,
-                        DatumRodenja = dtpDatumRodenja.Value.Date,
-                        Email = txtEmail.Text,
-                        Ime = txtIme.Text,
-                        Prezime = txtPrezime.Text,
-                        Spol = cmbSpol.SelectedItem.ToString(),
-                        Telefon = txtTelefon.Text
-                    };
-                    try
-                    {
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            if (pictureBox1.Image != null)
-                            {
-                                pictureBox1.Image.Save(ms, ImageFormat.Jpeg);
-                                request.Slika = ms.ToArray();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Potrebno je uslikati!", "", MessageBoxButtons.OK);
-                                return;
-                            }
-                        }
-                    }
-                    catch { }
-                    
-                    int id = ClanID ?? default(int);
-                    var korisnik = await _service.Update<Korisnik>(id, request);
-                    if (korisnik != null)
-                    {
-                        LoadClanovi();
-                        MessageBox.Show("Uspjesno ste spremili izmjene!");
-                        Clear();
-                    }
+                    UpdateClan();
+                }
+                else if(ClanID == null)
+                {
+                    SpremiNovogClana();
                 }
             }
         }
 
-        private void dgvClanovi_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void UpdateClan()
         {
-            if (e.ColumnIndex == 9)
+            var request = new KorisnikUpdateRequest
             {
-                int ClanID = Int32.Parse(dgvClanovi.Rows[e.RowIndex].Cells["Id"].Value.ToString());
-                frmClanarine frm = new frmClanarine(ClanID);
-                frm.Show();
+                BrojKartice = txtBrojKartice.Text,
+                DatumRodenja = dtpDatumRodenja.Value.Date,
+                Email = txtEmail.Text,
+                Ime = txtIme.Text,
+                Prezime = txtPrezime.Text,
+                Spol = cmbSpol.SelectedItem.ToString(),
+                Telefon = txtTelefon.Text
+            };
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    if (pictureBox1.Image != null)
+                    {
+                        pictureBox1.Image.Save(ms, ImageFormat.Jpeg);
+                        request.Slika = ms.ToArray();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Potrebno je uslikati!", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            int id = ClanID ?? default(int);
+            var korisnik = await _service.Update<Korisnik>(id, request);
+            if (korisnik != null)
+            {
+                MessageBox.Show("Uspjesno ste spremili izmjene!");
+                this.Close();
             }
         }
 
@@ -249,14 +239,17 @@ namespace WinUI.Clanovi
             if (string.IsNullOrWhiteSpace(txtIme.Text))
             {
                 errorProvider1.SetError(txtIme, Resources.Validation_Required);
+                e.Cancel = true;
             }
             else if (!Regex.Match(txtIme.Text, @"^[a-zA-ZČčĆćŽžĐđŠš ]+$", RegexOptions.IgnoreCase).Success)
             {
                 errorProvider1.SetError(txtIme, "Dozvoljena su samo slova!");
+                e.Cancel = true;
             }
             else if (txtIme.Text.Length > 50)
             {
                 errorProvider1.SetError(txtIme, "Maksimalna dozvoljena duzina je 50 karaktera!");
+                e.Cancel = true;
             }
             else
             {
@@ -269,14 +262,17 @@ namespace WinUI.Clanovi
             if (string.IsNullOrWhiteSpace(txtPrezime.Text))
             {
                 errorProvider1.SetError(txtPrezime, Resources.Validation_Required);
+                e.Cancel = true;
             }
             else if (!Regex.Match(txtPrezime.Text, @"^[a-zA-ZČčĆćŽžĐđŠš ]+$", RegexOptions.IgnoreCase).Success)
             {
                 errorProvider1.SetError(txtPrezime, "Dozvoljena su samo slova!");
+                e.Cancel = true;
             }
             else if (txtPrezime.Text.Length > 50)
             {
                 errorProvider1.SetError(txtPrezime, "Maksimalna dozvoljena duzina je 50 karaktera!");
+                e.Cancel = true;
             }
             else
             {
@@ -287,9 +283,9 @@ namespace WinUI.Clanovi
         private void cmbSpol_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cmbSpol.SelectedItem.ToString()))
-            {
-                e.Cancel = true;
+            {               
                 errorProvider1.SetError(cmbSpol, Properties.Resources.Validation_Required);
+                e.Cancel = true;
             }
             else
             {
@@ -297,31 +293,46 @@ namespace WinUI.Clanovi
             }
         }
 
+        private async Task<bool> EmailExixsts()
+        {
+            KorisniciSearchRequest request = new KorisniciSearchRequest
+            {
+                Email = txtEmail.Text
+            };
+            List<Model.Korisnik> korisnik = await _service.Get<List<Model.Korisnik>>(request);
+            if (ClanID == null && korisnik.Count > 0)
+            {
+                return true;
+            }
+            else if (ClanID != null && korisnik.Count > 0)
+            {
+                if (korisnik[0].Id != ClanID)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private async void txtEmail_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtEmail.Text.ToString()))
             {
                 errorProvider1.SetError(txtEmail, Resources.Validation_Required);
+                e.Cancel = true;
             }
-            if(!Regex.Match(txtEmail.Text, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", RegexOptions.IgnoreCase).Success)
+            if (!Regex.Match(txtEmail.Text, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", RegexOptions.IgnoreCase).Success)
+            {
                 errorProvider1.SetError(txtEmail, "Neispravan format Email-a!");
+                e.Cancel = true;
+            }
             else if (txtEmail.Text != null)
             {
-                KorisniciSearchRequest request = new KorisniciSearchRequest
+                var _emailExists = await EmailExixsts();
+                if (_emailExists)
                 {
-                    Email = txtEmail.Text
-                };
-                List<Model.Korisnik> korisnik = await _service.Get<List<Model.Korisnik>>(request);
-                if (ClanID == null && korisnik.Count > 0)
-                {
-                    errorProvider1.SetError(txtEmail, "Email je vec registrovan u bazi!");
-                }
-                else if (ClanID != null && korisnik.Count > 0)
-                {
-                    if (korisnik[0].Id != ClanID)
-                    {
-                        errorProvider1.SetError(txtEmail, "Email je vec registrovan u bazi!");
-                    }
+                    errorProvider1.SetError(txtEmail, "Email postoji!");
+                    e.Cancel = true;
                 }
             }
             else
@@ -335,32 +346,44 @@ namespace WinUI.Clanovi
             if (!string.IsNullOrWhiteSpace(txtTelefon.Text) && !Regex.Match(txtTelefon.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
             {
                 errorProvider1.SetError(txtTelefon, "Dozvoljeni su samo brojevi!");
+                e.Cancel = true;
             }
+        }
+
+        private async Task<bool> KarticaExists()
+        {
+            KorisniciSearchRequest request = new KorisniciSearchRequest
+            {
+                BrojKartice = txtBrojKartice.Text
+            };
+            List<Model.Korisnik> korisnik = await _service.Get<List<Model.Korisnik>>(request);
+            if (ClanID == null && korisnik.Count > 0)
+            {
+                return true;
+            }
+            else if (ClanID != null && korisnik.Count > 0)
+            {
+                if (korisnik[0].Id != ClanID)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private async void txtBrojKartice_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtBrojKartice.Text))
+            if (txtBrojKartice.Text.Length != 8 || !Regex.Match(txtBrojKartice.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
             {
-                errorProvider1.SetError(txtBrojKartice, Resources.Validation_Required);
+                errorProvider1.SetError(txtBrojKartice, "Broj kartice mora biti 8 brojeva!");
+                e.Cancel = true;
             }
-            else if (txtBrojKartice != null)
+            else
             {
-                KorisniciSearchRequest request = new KorisniciSearchRequest
-                {
-                    BrojKartice = txtBrojKartice.Text
-                };
-                List<Model.Korisnik> korisnik = await _service.Get<List<Model.Korisnik>>(request);
-                if (ClanID == null && korisnik.Count > 0)
-                {
-                    errorProvider1.SetError(txtBrojKartice, "Broj kartice je vec registrovan u bazi!");
-                }
-                else if (ClanID != null && korisnik.Count>0)
-                {
-                    if (korisnik[0].Id != ClanID)
-                    {
-                        errorProvider1.SetError(txtBrojKartice, "Broj kartice je vec registrovan u bazi!");
-                    }
+                var _karticaExists = await KarticaExists();
+                if(_karticaExists) {
+                    errorProvider1.SetError(txtBrojKartice, "Broj kartice vec postoji!");
+                    e.Cancel = true;
                 }
             }
         }
@@ -374,6 +397,12 @@ namespace WinUI.Clanovi
             txtEmail.Text = "";
             txtTelefon.Text = "";
             txtBrojKartice.Text = "";
+        }
+
+        private void frmDodajClana_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmListaClanova frm = new frmListaClanova();
+            frm.Show();
         }
     }
 }

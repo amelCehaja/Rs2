@@ -19,7 +19,7 @@ namespace WebAPI.Services
             var query = _context.Set<PlanKategorija>().AsQueryable();
             if(search.Naziv != null)
             {
-                query.Where(x => x.Naziv == search.Naziv);
+                query = query.Where(x => x.Naziv == search.Naziv);
             }
             var list = query.ToList();
             return _mapper.Map<List<Model.PlanKategorija>>(list);

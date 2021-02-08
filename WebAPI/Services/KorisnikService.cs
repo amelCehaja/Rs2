@@ -144,6 +144,11 @@ namespace WebAPI.Services
             {
                 query = query.Where(x => x.Username == request.Username);
             }
+            else if(request.Id != null)
+            {
+                query = query.Where(x => x.Id == request.Id);
+            }
+
             
 
             var list = query.ToList();

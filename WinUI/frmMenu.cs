@@ -27,13 +27,13 @@ namespace WinUI
 
         private void btnTipoviClanarine_Click(object sender, EventArgs e)
         {
-            frmTipoviClanarine frm = new frmTipoviClanarine();
+            frmListaTipovaClanarine frm = new frmListaTipovaClanarine();
             frm.Show();
         }
 
         private void btnNoviClan_Click(object sender, EventArgs e)
         {
-            frmDodajClana frm = new frmDodajClana();
+            frmListaClanova frm = new frmListaClanova();
             frm.Show();
         }
 
@@ -45,19 +45,19 @@ namespace WinUI
 
         private void btnMisici_Click(object sender, EventArgs e)
         {
-            frmMisic frm = new frmMisic();
+            frmListaMisica frm = new frmListaMisica();
             frm.Show();
         }
 
         private void btnVjezba_Click(object sender, EventArgs e)
         {
-            frmVjezba frm = new frmVjezba();
+            frmListaVjezbi frm = new frmListaVjezbi();
             frm.Show();
         }
 
         private void btnPlanIProgram_Click(object sender, EventArgs e)
         {
-            frmPlanIProgram frm = new frmPlanIProgram();
+            frmListaPlanIProgram frm = new frmListaPlanIProgram();
             frm.Show();
         }
 
@@ -81,7 +81,7 @@ namespace WinUI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            frmDodajKategoriju frm = new frmDodajKategoriju();
+            frmListaKategorijaPiP frm = new frmListaKategorijaPiP();
             frm.Show();
         }
     }

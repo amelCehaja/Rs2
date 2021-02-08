@@ -47,7 +47,7 @@ namespace WinUI.Pitanja
                 };
                 Pitanje frm = new Pitanje(pitanje);
                 frm.Show();
-                this.Hide();
+                this.Close();
             };
         }
     }

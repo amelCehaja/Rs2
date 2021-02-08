@@ -32,12 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtNaziv = new System.Windows.Forms.TextBox();
             this.btnNovi = new System.Windows.Forms.Button();
-            this.btnIzmjeni = new System.Windows.Forms.Button();
-            this.dgvMisici = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMisici)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,57 +51,17 @@
             this.txtNaziv.Name = "txtNaziv";
             this.txtNaziv.Size = new System.Drawing.Size(180, 20);
             this.txtNaziv.TabIndex = 1;
-            this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validate);
+            this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validating);
             // 
             // btnNovi
             // 
-            this.btnNovi.Location = new System.Drawing.Point(66, 84);
+            this.btnNovi.Location = new System.Drawing.Point(156, 81);
             this.btnNovi.Name = "btnNovi";
             this.btnNovi.Size = new System.Drawing.Size(90, 23);
             this.btnNovi.TabIndex = 2;
-            this.btnNovi.Text = "Novi misic";
+            this.btnNovi.Text = "Spremi";
             this.btnNovi.UseVisualStyleBackColor = true;
             this.btnNovi.Click += new System.EventHandler(this.btnNovi_Click);
-            // 
-            // btnIzmjeni
-            // 
-            this.btnIzmjeni.Location = new System.Drawing.Point(171, 84);
-            this.btnIzmjeni.Name = "btnIzmjeni";
-            this.btnIzmjeni.Size = new System.Drawing.Size(75, 23);
-            this.btnIzmjeni.TabIndex = 3;
-            this.btnIzmjeni.Text = "Izmjeni misic";
-            this.btnIzmjeni.UseVisualStyleBackColor = true;
-            this.btnIzmjeni.Click += new System.EventHandler(this.btnIzmjeni_Click);
-            // 
-            // dgvMisici
-            // 
-            this.dgvMisici.AllowUserToAddRows = false;
-            this.dgvMisici.AllowUserToDeleteRows = false;
-            this.dgvMisici.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMisici.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Naziv});
-            this.dgvMisici.Location = new System.Drawing.Point(269, 12);
-            this.dgvMisici.Name = "dgvMisici";
-            this.dgvMisici.ReadOnly = true;
-            this.dgvMisici.Size = new System.Drawing.Size(165, 260);
-            this.dgvMisici.TabIndex = 4;
-            this.dgvMisici.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMisici_CellDoubleClick);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // Naziv
-            // 
-            this.Naziv.DataPropertyName = "Naziv";
-            this.Naziv.HeaderText = "Naziv";
-            this.Naziv.Name = "Naziv";
-            this.Naziv.ReadOnly = true;
             // 
             // errorProvider1
             // 
@@ -116,16 +71,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 284);
-            this.Controls.Add(this.dgvMisici);
-            this.Controls.Add(this.btnIzmjeni);
+            this.ClientSize = new System.Drawing.Size(261, 121);
             this.Controls.Add(this.btnNovi);
             this.Controls.Add(this.txtNaziv);
             this.Controls.Add(this.label1);
             this.Name = "frmMisic";
             this.Text = "Misic";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMisic_FormClosed);
             this.Load += new System.EventHandler(this.Misic_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMisici)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -137,10 +90,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtNaziv;
         private System.Windows.Forms.Button btnNovi;
-        private System.Windows.Forms.Button btnIzmjeni;
-        private System.Windows.Forms.DataGridView dgvMisici;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
         private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

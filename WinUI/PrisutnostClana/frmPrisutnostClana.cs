@@ -47,7 +47,7 @@ namespace WinUI.PrisutnostClana
 
         private async void btnSpremi_Click(object sender, EventArgs e)
         {
-            Model.Korisnik korisnik = new Model.Korisnik();
+            Model.Korisnik korisnik = null;
             KorisniciSearchRequest korisniciSearchRequest = new KorisniciSearchRequest
             {
                 BrojKartice = txtBrojKartice.Text

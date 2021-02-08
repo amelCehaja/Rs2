@@ -21,8 +21,9 @@ namespace WinUI.Vjezba
         private readonly APIService _misicService = new APIService("Misic");
         private int? _vjezbaId;
 
-        public frmVjezba()
+        public frmVjezba(int? VjezbaId)
         {
+            _vjezbaId = VjezbaId;
             InitializeComponent();
         }
 
@@ -39,7 +40,7 @@ namespace WinUI.Vjezba
             }
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void Novi()
         {
             if (ValidateChildren())
             {
@@ -61,7 +62,11 @@ namespace WinUI.Vjezba
                         pictureBox1.Image.Save(ms, ImageFormat.Gif);
                         request.Gif = ms.ToArray();
                     }
-                    else MessageBox.Show("Potreno je upload GIF!");
+                    else
+                    {
+                        MessageBox.Show("Potreno je upload GIF!");
+                        return;
+                    }
                 }
 
                 Model.Vjezba entity = null;
@@ -69,6 +74,7 @@ namespace WinUI.Vjezba
                 if (entity != null)
                 {
                     MessageBox.Show("Uspjesno ste dodali vjezbu!");
+                    this.Close();
                 }
             }
         }
@@ -79,7 +85,6 @@ namespace WinUI.Vjezba
             misici.ForEach(x =>
             {
                 clbMisici.Items.Add(x.Naziv);
-                cmbMisic.Items.Add(x.Naziv);
             });
 
         }
@@ -87,57 +92,28 @@ namespace WinUI.Vjezba
         private async void frmVjezba_Load(object sender, EventArgs e)
         {
             await LoadMisici();
-            await LoadVjezbe();
-
-        }
-        private async Task LoadVjezbe()
-        {
-            VjezbaSearchRequest request = new VjezbaSearchRequest();
-            if (cmbMisic.SelectedItem != null)
+            if (_vjezbaId != null)
             {
-                request.Misic = cmbMisic.SelectedItem.ToString();
-            }
-            else
-            {
-                request = null;
-            }
-            List<Model.Vjezba> vjezbe = await _service.Get<List<Model.Vjezba>>(request);
-            dgvVjezbe.AutoGenerateColumns = false;
-            dgvVjezbe.DataSource = vjezbe;
-        }
-
-        private async void btnPretraga_Click(object sender, EventArgs e)
-        {
-            VjezbaSearchRequest request = new VjezbaSearchRequest
-            {
-                Misic = cmbMisic.SelectedItem.ToString()
-            };
-            List<Model.Vjezba> vjezbe = await _service.Get<List<Model.Vjezba>>(request);
-            dgvVjezbe.AutoGenerateColumns = false;
-            dgvVjezbe.DataSource = vjezbe;
-        }
-
-        private async void dgvVjezbe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int vjezbaId = Int32.Parse(dgvVjezbe.Rows[e.RowIndex].Cells["id"].Value.ToString());
-            var result = await _service.GetById<Model.Vjezba>(vjezbaId);
-            txtNaziv.Text = result.Naziv;
-            txtOpis.Text = result.Opis;
-            _vjezbaId = result.Id;
-            byte[] slika = (byte[])dgvVjezbe.Rows[e.RowIndex].Cells["Gif"].Value;
-            var image = byteArrayToImage(slika);
-            pictureBox1.Image = image;
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            for (int i = 0; i < clbMisici.Items.Count; i++)
-            {
-                clbMisici.SetItemChecked(i, false);
-                result.Misici.ForEach(m =>
+                Model.Vjezba vjezba = await _service.GetById<Model.Vjezba>(_vjezbaId);
+                txtNaziv.Text = vjezba.Naziv;
+                txtOpis.Text = vjezba.Opis;
+                byte[] slika = vjezba.Gif;
+                var image = byteArrayToImage(slika);
+                pictureBox1.Image = image;
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                for (int i = 0; i < clbMisici.Items.Count; i++)
                 {
-                    if (m == clbMisici.Items[i].ToString())
-                        clbMisici.SetItemChecked(i, true);
-                });
+                    clbMisici.SetItemChecked(i, false);
+                    vjezba.Misici.ForEach(m =>
+                    {
+                        if (m == clbMisici.Items[i].ToString())
+                            clbMisici.SetItemChecked(i, true);
+                    });
+                }
             }
+            
         }
+       
         private Image byteArrayToImage(byte[] byteArray)
         {
             Image image;
@@ -146,13 +122,8 @@ namespace WinUI.Vjezba
             return image;
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void Izmjena()
         {
-            if (_vjezbaId == null)
-            {
-                MessageBox.Show("Nije odabarana vjezba za izmjenu!");
-                return;
-            }
             if (ValidateChildren())
             {
                 VjezbaInsertRequest vjezba = new VjezbaInsertRequest
@@ -168,7 +139,11 @@ namespace WinUI.Vjezba
                         pictureBox1.Image.Save(ms, ImageFormat.Gif);
                         vjezba.Gif = ms.ToArray();
                     }
-                    else MessageBox.Show("Potreno je upload GIF!");
+                    else
+                    {
+                        MessageBox.Show("Potreno je upload GIF!");
+                        return;
+                    }
                 }
                 foreach (var x in clbMisici.CheckedItems)
                 {
@@ -176,16 +151,16 @@ namespace WinUI.Vjezba
                 }
                 Model.Vjezba entity = null;
                 entity = await _service.Update<Model.Vjezba>(_vjezbaId ?? default, vjezba);
+                if (entity != null)
+                {
+                    MessageBox.Show("Uspjesno ste izmjenili vjezbu!");
+                    this.Close();
+                }
             }
         }
 
-        private async void txtNaziv_Validation(object sender, CancelEventArgs e)
+        private async Task<bool> NazivExists()
         {
-            if (string.IsNullOrWhiteSpace(txtNaziv.Text))
-            {
-                errorProvider1.SetError(txtNaziv, Properties.Resources.Validation_Required);
-            }
-            else { errorProvider1.SetError(txtNaziv, null); }
             VjezbaSearchRequest request = new VjezbaSearchRequest
             {
                 Naziv = txtNaziv.Text
@@ -193,18 +168,36 @@ namespace WinUI.Vjezba
             List<Model.Vjezba> vjezbe = await _service.Get<List<Model.Vjezba>>(request);
             if (vjezbe.Count > 0 && _vjezbaId == null)
             {
-                errorProvider1.SetError(txtNaziv, "Naziv vec postoji!");
+                return true;
             }
             else if (vjezbe.Count > 0 && _vjezbaId != null)
             {
                 if (vjezbe[0].Id != _vjezbaId)
                 {
-                    errorProvider1.SetError(txtNaziv, "Naziv vec postoji!");
+                    return true;
                 }
             }
-            else { errorProvider1.SetError(txtNaziv, null); }
+            return false;
+        }
 
-
+        private async void txtNaziv_Validation(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNaziv.Text))
+            {
+                errorProvider1.SetError(txtNaziv, Properties.Resources.Validation_Required);
+                e.Cancel = true;
+            }
+            else if (!string.IsNullOrWhiteSpace(txtNaziv.Text))
+            {
+                var exists = await NazivExists();
+                if(exists == true)
+                {
+                    errorProvider1.SetError(txtNaziv, "Naziv postoji!");
+                    e.Cancel = true;
+                }
+            }
+            else 
+                errorProvider1.SetError(txtNaziv, null); 
         }
 
         private void txtOpis_Validation(object sender, CancelEventArgs e)
@@ -212,10 +205,12 @@ namespace WinUI.Vjezba
             if (string.IsNullOrWhiteSpace(txtOpis.Text))
             {
                 errorProvider1.SetError(txtOpis, Properties.Resources.Validation_Required);
+                e.Cancel = true;
             }
             else if (txtOpis.Text.Length > 1000)
             {
-                errorProvider1.SetError(txtOpis, "Opis ne moze biti duzi od 100 karaktera!");
+                errorProvider1.SetError(txtOpis, "Opis ne moze biti duzi od 1000 karaktera!");
+                e.Cancel = true;
             }
             else
                 errorProvider1.SetError(txtOpis, null);
@@ -227,6 +222,7 @@ namespace WinUI.Vjezba
             if (clbMisici.CheckedItems.Count == 0)
             {
                 errorProvider1.SetError(clbMisici, Properties.Resources.Validation_Required);
+                e.Cancel = true;
             }
             else
                 errorProvider1.SetError(clbMisici, null);
@@ -238,10 +234,29 @@ namespace WinUI.Vjezba
             if (pictureBox1.Image == null)
             {
                 errorProvider1.SetError(pictureBox1, Properties.Resources.Validation_Required);
+                e.Cancel = true;
             }
             else
                 errorProvider1.SetError(pictureBox1, null);
 
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            var exists = await NazivExists();
+            if (exists == false)
+            {
+                if (_vjezbaId == null)
+                    Novi();
+                else
+                    Izmjena();
+            }
+        }
+
+        private void frmVjezba_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            frmListaVjezbi frm = new frmListaVjezbi();
+            frm.Show();
         }
     }
 }

@@ -19,9 +19,15 @@ namespace WebAPI.Services
             var list = _context.TipClanarine.AsQueryable();
             if (search.Naziv != null)
             {
-                list.Where(x => search.Naziv == x.Naziv).ToList();
+                list = list.Where(x => search.Naziv == x.Naziv);
             }
-            return _mapper.Map<List<Model.TipClanarine>>(list);
+            var result = list.ToList();
+            return _mapper.Map<List<Model.TipClanarine>>(result);
+        }
+        public override Model.TipClanarine GetByID(int id)
+        {
+            var tipClanarine = _context.TipClanarine.Find(id);
+            return _mapper.Map<Model.TipClanarine>(tipClanarine);
         }
     }
 }

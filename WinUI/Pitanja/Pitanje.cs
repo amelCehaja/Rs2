@@ -50,9 +50,20 @@ namespace WinUI.Pitanja
             };
             await _komentarService.Insert<Model.Komentar>(request);
             MessageBox.Show("Uspjesno ste odgovorili na pitanje", "", MessageBoxButtons.OK);
-            this.Hide();
+            this.Close();
             PitanjaList frm = new PitanjaList();
             frm.Show();
+        }
+
+        private void txtOdgovor_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtOdgovor.Text))
+            {
+                errorProvider1.SetError(txtOdgovor, "Polje je obavezno!");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.SetError(txtOdgovor,null);
         }
     }
 }

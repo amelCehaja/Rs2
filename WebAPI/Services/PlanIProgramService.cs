@@ -11,7 +11,7 @@ using WebAPI.Database;
 
 namespace WebAPI.Services
 {
-    public class PlanIProgramService : BaseCRUDService<Model.PlanIProgram, PlanIProgramSearchRequest, PlanIProgramInsertRequest, object, Database.PlanIprogram>
+    public class PlanIProgramService : BaseCRUDService<Model.PlanIProgram, PlanIProgramSearchRequest, PlanIProgramInsertRequest, PlanIProgramUpdateRequest, Database.PlanIprogram>
     {
         public PlanIProgramService(RS2Context context, IMapper mapper) : base(context, mapper)
         {

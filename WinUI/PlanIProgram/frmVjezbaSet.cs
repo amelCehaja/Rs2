@@ -72,17 +72,34 @@ namespace WinUI.PlanIProgram
         private void txtBrojPonavljanja_Validate(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtBrojPonavljanja.Text))
+            {
                 errorProvider1.SetError(txtBrojPonavljanja, Resources.Validation_Required);
+                e.Cancel = true;
+            }
             else if (!Regex.Match(txtBrojPonavljanja.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+            {
                 errorProvider1.SetError(txtBrojPonavljanja, "Dozvoljeni su samo brojevi!");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.SetError(txtBrojPonavljanja, null);
+
         }
 
         private void txtDuzinaOdmora_Validate(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTrajanjeOdmora.Text))
+            {
                 errorProvider1.SetError(txtTrajanjeOdmora, Resources.Validation_Required);
+                e.Cancel = true;
+            }
             else if (!Regex.Match(txtTrajanjeOdmora.Text, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+            {
                 errorProvider1.SetError(txtTrajanjeOdmora, "Dozvoljeni su samo brojevi!");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.SetError(txtTrajanjeOdmora, null);
         }
     }
 }

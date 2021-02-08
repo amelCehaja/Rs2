@@ -50,7 +50,9 @@ namespace WebAPI.Mappers
             CreateMap<KorisnikPlanInsertRequest, Database.KorisnikPlanIprogram>();
             CreateMap<Database.PlanKategorija, Model.PlanKategorija>();
             CreateMap<Model.PlanKategorija, Database.PlanKategorija>();
+            CreateMap<PlanKategorijaInsertRequest, Database.PlanKategorija>();
             CreateMap<KorisnikUpdateRequest, Database.Korisnik>();
+            CreateMap<PlanIProgramUpdateRequest,Database.PlanIprogram>();
         }
     }
 }

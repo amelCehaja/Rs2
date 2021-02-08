@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,6 +40,8 @@
             this.txtOdgovor = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnOdgovori = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -118,6 +121,7 @@
             this.txtOdgovor.Size = new System.Drawing.Size(238, 96);
             this.txtOdgovor.TabIndex = 8;
             this.txtOdgovor.Text = "";
+            this.txtOdgovor.Validating += new System.ComponentModel.CancelEventHandler(this.txtOdgovor_Validating);
             // 
             // label5
             // 
@@ -138,6 +142,10 @@
             this.btnOdgovori.UseVisualStyleBackColor = true;
             this.btnOdgovori.Click += new System.EventHandler(this.btnOdgovori_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // Pitanje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -157,6 +165,7 @@
             this.Name = "Pitanje";
             this.Text = "Pitanje";
             this.Load += new System.EventHandler(this.Pitanje_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,5 +184,6 @@
         private System.Windows.Forms.RichTextBox txtOdgovor;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnOdgovori;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

@@ -38,19 +38,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtOpis = new System.Windows.Forms.RichTextBox();
             this.btnSpremi = new System.Windows.Forms.Button();
-            this.txtSearchNaziv = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnPretraga = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cijena = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Kategorija = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Details = new System.Windows.Forms.DataGridViewButtonColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,7 +111,7 @@
             this.txtOpis.Size = new System.Drawing.Size(336, 218);
             this.txtOpis.TabIndex = 7;
             this.txtOpis.Text = "";
-            this.txtOpis.TextChanged += new System.EventHandler(this.txtOpis_Validate);
+            this.txtOpis.Validating += new System.ComponentModel.CancelEventHandler(this.txtOpis_Validate);
             // 
             // btnSpremi
             // 
@@ -132,13 +122,6 @@
             this.btnSpremi.Text = "Spremi";
             this.btnSpremi.UseVisualStyleBackColor = true;
             this.btnSpremi.Click += new System.EventHandler(this.btnSpremi_Click);
-            // 
-            // txtSearchNaziv
-            // 
-            this.txtSearchNaziv.Location = new System.Drawing.Point(567, 30);
-            this.txtSearchNaziv.Name = "txtSearchNaziv";
-            this.txtSearchNaziv.Size = new System.Drawing.Size(166, 20);
-            this.txtSearchNaziv.TabIndex = 9;
             // 
             // groupBox1
             // 
@@ -157,80 +140,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(518, 33);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Naziv";
-            // 
-            // btnPretraga
-            // 
-            this.btnPretraga.Location = new System.Drawing.Point(754, 28);
-            this.btnPretraga.Name = "btnPretraga";
-            this.btnPretraga.Size = new System.Drawing.Size(89, 23);
-            this.btnPretraga.TabIndex = 12;
-            this.btnPretraga.Text = "Pretraga";
-            this.btnPretraga.UseVisualStyleBackColor = true;
-            this.btnPretraga.Click += new System.EventHandler(this.btnPretraga_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Naziv,
-            this.Cijena,
-            this.Kategorija,
-            this.Details});
-            this.dataGridView1.Location = new System.Drawing.Point(521, 70);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(447, 439);
-            this.dataGridView1.TabIndex = 13;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // Naziv
-            // 
-            this.Naziv.DataPropertyName = "Naziv";
-            this.Naziv.HeaderText = "Naziv";
-            this.Naziv.Name = "Naziv";
-            this.Naziv.ReadOnly = true;
-            // 
-            // Cijena
-            // 
-            this.Cijena.DataPropertyName = "Cijena";
-            this.Cijena.HeaderText = "Cijena";
-            this.Cijena.Name = "Cijena";
-            this.Cijena.ReadOnly = true;
-            // 
-            // Kategorija
-            // 
-            this.Kategorija.DataPropertyName = "Kategorija";
-            this.Kategorija.HeaderText = "Kategorija";
-            this.Kategorija.Name = "Kategorija";
-            this.Kategorija.ReadOnly = true;
-            // 
-            // Details
-            // 
-            this.Details.HeaderText = "Details";
-            this.Details.Name = "Details";
-            this.Details.ReadOnly = true;
-            this.Details.Text = "Detalji";
-            this.Details.UseColumnTextForButtonValue = true;
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -239,21 +148,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 550);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnPretraga);
-            this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(496, 518);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtSearchNaziv);
             this.Name = "frmPlanIProgram";
             this.Text = "PlanIProgram";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPlanIProgram_FormClosed);
             this.Load += new System.EventHandler(this.PlanIProgram_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -268,16 +172,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox txtOpis;
         private System.Windows.Forms.Button btnSpremi;
-        private System.Windows.Forms.TextBox txtSearchNaziv;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnPretraga;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cijena;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Kategorija;
-        private System.Windows.Forms.DataGridViewButtonColumn Details;
         private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
