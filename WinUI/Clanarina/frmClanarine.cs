@@ -32,6 +32,7 @@ namespace WinUI.Clanarina
             cmbTipClanarine.DisplayMember = "Naziv";
             cmbTipClanarine.ValueMember = "Id";
             cmbTipClanarine.DataSource = result;
+            cmbTipClanarine.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         private async Task LoadClanarine()
         {

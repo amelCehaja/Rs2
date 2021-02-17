@@ -43,8 +43,6 @@ namespace MobileApp.ViewModels
             {
                 OtherPlanoviList.Add(x);
             }
-            
         }
-
     }
 }

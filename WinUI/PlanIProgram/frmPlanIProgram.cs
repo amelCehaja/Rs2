@@ -53,6 +53,7 @@ namespace WinUI.PlanIProgram
             cmbKategorija.DisplayMember = "Naziv";
             cmbKategorija.ValueMember = "Id";
             cmbKategorija.DataSource = kategorije;
+            cmbKategorija.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private async void btnSpremi_Click(object sender, EventArgs e)

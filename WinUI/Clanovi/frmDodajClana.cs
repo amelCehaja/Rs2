@@ -25,6 +25,7 @@ namespace WinUI.Clanovi
         APIService _service = new APIService("Korisnik");
         VideoCapture capture;
         Mat frame;
+        Bitmap tempImg;
         Bitmap image;
         int? ClanID = null;
         private Thread camera;
@@ -61,23 +62,24 @@ namespace WinUI.Clanovi
                 }
             }
         }
-
         private void btnStart_Click(object sender, EventArgs e)
         {
+           
             if (btnStart.Text.Equals("Start"))
             {
+                tempImg = new Bitmap(pictureBox1.Image);
                 CaptureCamera();
                 btnStart.Text = "Stop";
                 isCameraRunning = true;
             }
             else
             {
+                isCameraRunning = false;
                 capture.Release();
                 btnStart.Text = "Start";
-                isCameraRunning = false;
+                pictureBox1.Image = tempImg;
             }
         }
-
         private void btnUslikaj_Click(object sender, EventArgs e)
         {
             if (isCameraRunning && pictureBox1.Image != null)
@@ -95,7 +97,6 @@ namespace WinUI.Clanovi
                 MessageBox.Show("Cannot take picture if the camera isn't capturing image!", "Camera error!", MessageBoxButtons.OK);
             }
         }
-
         private async void SpremiNovogClana()
         {
             if (ValidateChildren())
@@ -133,7 +134,6 @@ namespace WinUI.Clanovi
                 }
             }
         }
-
         private async void frmDodajClana_Load(object sender, EventArgs e)
         {
             cmbSpol.Items.Add("M");
@@ -161,7 +161,6 @@ namespace WinUI.Clanovi
                     pictureBox1.Image = byteArrayToImage(slika);
             }
         }
-
         private Image byteArrayToImage(byte[] byteArray)
         {
             Image image;
@@ -173,7 +172,6 @@ namespace WinUI.Clanovi
 
             return image;
         }
-
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
             var _emailExists = await EmailExixsts();

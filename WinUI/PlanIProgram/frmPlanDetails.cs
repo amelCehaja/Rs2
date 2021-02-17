@@ -14,7 +14,7 @@ namespace WinUI.PlanIProgram
     public partial class frmPlanDetails : Form
     {
         private int _planId;
-        private int _danId;
+        private int? _danId;
         private string _naziv;
         private readonly APIService _danService = new APIService("Dan");
         private readonly APIService _vjezbaService = new APIService("Vjezba");
@@ -47,7 +47,7 @@ namespace WinUI.PlanIProgram
             cmbVjezbe.DisplayMember = "Naziv";
             cmbVjezbe.ValueMember = "Id";
             cmbVjezbe.DataSource = vjezbe;
-            cmbVjezbe.SelectedIndex = 0;
+                
         }
         private async Task LoadRedniBrojevi(int danId)
         {
@@ -71,7 +71,7 @@ namespace WinUI.PlanIProgram
         {
             DanSetSearchRequest request = new DanSetSearchRequest
             {
-                DanId = _danId
+                DanId = _danId ?? default
             };
             List<Model.DanSet> result = await _danSetService.Get<List<Model.DanSet>>(request);
             dgvVjezbe.AutoGenerateColumns = false;
@@ -79,6 +79,8 @@ namespace WinUI.PlanIProgram
         }
         private async void frmPlanDetails_Load(object sender, EventArgs e)
         {
+            cmbVjezbe.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbRedniBroj.DropDownStyle = ComboBoxStyle.DropDownList;
             planIProgramNaziv.Text = _naziv;
             await LoadDani();
             await LoadVjezbe();
@@ -102,24 +104,31 @@ namespace WinUI.PlanIProgram
         {
             grbDan.Text = dgvDani.Rows[e.RowIndex].Cells["Dan"].Value.ToString();
             _danId = Int32.Parse(dgvDani.Rows[e.RowIndex].Cells["DanId"].Value.ToString());
-            await LoadRedniBrojevi(_danId);
+            await LoadRedniBrojevi(_danId ?? default);
             await LoadSetovi();
         }
         private async void btnSpremi_Click(object sender, EventArgs e)
         {
-            DanSetInsertRequest request = new DanSetInsertRequest
+            if (_danId != null)
             {
-                DanId = _danId,
-                VjezbaId = (int)cmbVjezbe.SelectedValue,
-                RedniBroj = (int)cmbRedniBroj.SelectedValue
-            };
-            Model.DanSet entity = null;
-            entity = await _danSetService.Insert<Model.DanSet>(request);
-            if(entity != null)
+                DanSetInsertRequest request = new DanSetInsertRequest
+                {
+                    DanId = _danId ?? default,
+                    VjezbaId = (int)cmbVjezbe.SelectedValue,
+                    RedniBroj = (int)cmbRedniBroj.SelectedValue
+                };
+                Model.DanSet entity = null;
+                entity = await _danSetService.Insert<Model.DanSet>(request);
+                if (entity != null)
+                {
+                    MessageBox.Show("Uspjesno ste dodali!");
+                    await LoadRedniBrojevi(_danId ?? default);
+                    await LoadSetovi();
+                }
+            }
+            else
             {
-                MessageBox.Show("Uspjesno ste dodali!");
-                await LoadRedniBrojevi(_danId);
-                await LoadSetovi();
+                MessageBox.Show("Niste odabrali dan za koji dodajete set! (double click na dan)");
             }
         }
 
@@ -150,7 +159,7 @@ namespace WinUI.PlanIProgram
                     await _setVjezbaService.Delete<Model.SetVjezba>(x.Id);
                 }
                 await LoadSetovi();
-                await LoadRedniBrojevi(_danId);
+                await LoadRedniBrojevi(_danId ?? default);
             }
         }
     }

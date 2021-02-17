@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MobileApp": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
