@@ -16,18 +16,24 @@ namespace MobileApp.Views
         private OcjenaViewModel model = null;
         public OcjenaPage(int planId)
         {
-            InitializeComponent();
+            
             model = new OcjenaViewModel
             {
-                PlanId = planId,
-                Rating = 5
+                PlanId = planId
             };
             BindingContext = model;
+            InitializeComponent();
+        }
+        protected override void OnAppearing()
+        {
+            model._loadOcjene();
+            base.OnAppearing();
         }
         private async void Ocjeni(object sender, EventArgs e)
         {
-            await model._ocijeni();
-            await Navigation.PopModalAsync();
+            bool ocijeni = await model._ocijeni();
+            if(ocijeni == true)
+                await Navigation.PopModalAsync();
         }
     }
 }

@@ -15,12 +15,9 @@ namespace MobileApp
         public static int UserId { get; set; }
 
         private readonly string _route;
-//#if DEBUG
-        private string _apiUrl = "http://localhost:55208/api";
-//#endif
-//#if RELEASE
- //       private string _apiUrl = "http://localhost:58065/api";
-//#endif       
+
+        private string _apiUrl = "http://localhost:58065/api";
+ 
         public APIService(string route)
         {
             _route = route;

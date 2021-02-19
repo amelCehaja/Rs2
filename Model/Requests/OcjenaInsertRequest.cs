@@ -10,5 +10,7 @@ namespace Model.Requests
         public int PlanId { get; set; }
         public string Opis { get; set; }
         public int Rating { get; set; }
+        public DateTime Datum { get; set; }
+        public TimeSpan Vrijeme { get; set; }
     }
 }

@@ -5,7 +5,8 @@
              x:Class="MobileApp.Views.TjelesniNapredakAdd">
     <ContentPage.Content>
         <StackLayout>
-            <views:Navigation></views:Navigation>
+            <views:Navigation IsVisible="{Binding FirstOP}"></views:Navigation>
+            <Label IsVisible="{Binding First}">Prva prijava - potrebno unijeti podatke za koristenje aplikacije!</Label>
             <Label Text="Tezina (kg)"></Label>
             <Entry Text="{Binding Tezina}" ></Entry>
             <Label Text="Obim bicepsa (cm)"></Label>

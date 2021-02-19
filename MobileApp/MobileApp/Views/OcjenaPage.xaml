@@ -9,7 +9,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -18,15 +18,10 @@
                 </Grid.ColumnDefinitions>
                 <views:Navigation Grid.Row="0" Grid.ColumnSpan="3"></views:Navigation>
                 <Label Text="Ocjena: " Grid.Row="1" Grid.Column="0"></Label>
-                <Picker SelectedItem="{Binding Rating}" Grid.Column="1" Grid.Row="1">
-                    <Picker.Items>
-                        <x:String>1</x:String>
-                        <x:String>2</x:String>
-                        <x:String>3</x:String>
-                        <x:String>4</x:String>
-                        <x:String>5</x:String>
-                    </Picker.Items>
+                <Picker ItemsSource="{Binding Ocjene}" SelectedItem="{Binding Rating}" ItemDisplayBinding="{Binding Ocjena}" Grid.Column="1" Grid.Row="1">
                 </Picker>
+
+                
                 <Label Text="Komentar: " Grid.Row="2" Grid.Column="0"></Label>
                 <Entry Text="{Binding Komentar}" Grid.Row="2" Grid.Column="1"></Entry>
                 <Button Text="Ocijeni" Grid.Row="3" Grid.ColumnSpan="3" Clicked="Ocjeni"></Button>

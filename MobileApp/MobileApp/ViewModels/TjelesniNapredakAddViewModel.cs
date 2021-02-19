@@ -14,8 +14,23 @@ namespace MobileApp.ViewModels
         private readonly APIService _tjelesniNapredakService = new APIService("tjelesniDetalji");
         public TjelesniNapredakAddViewModel()
         {
-
+            
         }
+
+        private bool _firstLogin;
+        public bool First
+        {
+            get { return _firstLogin; }
+            set { SetProperty(ref _firstLogin, value); }
+        }
+
+        private bool _firstLoginOP;
+        public bool FirstOP
+        {
+            get { return _firstLoginOP; }
+            set { SetProperty(ref _firstLoginOP, value); }
+        }
+
         private string _kilaza = null;
         public string Kilaza
         {
@@ -92,6 +107,26 @@ namespace MobileApp.ViewModels
             };
             await _tjelesniNapredakService.Insert<object>(request);
             return true;
+        }
+
+        public async Task<bool> FirstLogin()
+        {
+            TjelesniDetaljiSearchRequest request = new TjelesniDetaljiSearchRequest
+            {
+                KorisnikId = APIService.UserId
+            };
+            var tjelesniDetalji = await _tjelesniNapredakService.Get<List<Model.TjelesniDetalji>>(request);
+            if (tjelesniDetalji.Count > 0)
+                return false;
+            return true;
+        }
+        public async Task Init()
+        {
+            First = await FirstLogin();
+            if (First == true)
+                FirstOP = false;
+            else
+                FirstOP = true;
         }
     }
 }

@@ -25,10 +25,10 @@ namespace MobileApp.Views
         }
         protected async override void OnAppearing()
         {
-            base.OnAppearing();
             await _model.GetOcjene();
-            await _model.ProvjeraOcjene();
             await _model.ProvjeraPOsjedovanja();
+            await _model.ProvjeraOcjene();
+            base.OnAppearing();
         }
         
         public async void Ocijeni(object sender, EventArgs e)

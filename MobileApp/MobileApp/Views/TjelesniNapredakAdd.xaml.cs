@@ -21,13 +21,23 @@ namespace MobileApp.Views
             BindingContext = model = new TjelesniNapredakAddViewModel();
             InitializeComponent();
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await model.Init();
+        }
         public async void Spremi_Click(object Sender, EventArgs e)
         {
+            bool firstLogin = await model.FirstLogin();
             bool spremiBool = await model.Spremi();
             if (spremiBool == true)
             {
                 await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste dodali tjelesni napredak!", "OK");
-                await Navigation.PopModalAsync();
+                if (firstLogin == false)
+                    await Navigation.PopModalAsync();
+                else
+                    Application.Current.MainPage = new MainPage();
             }
         }
     }

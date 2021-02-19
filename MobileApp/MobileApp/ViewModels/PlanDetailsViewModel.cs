@@ -113,7 +113,7 @@ namespace MobileApp.ViewModels
             {
                 foreach (var x in list)
                 {
-                    x.DatumVrijemeString = x.Datum.ToString("dd.MM.yyyy") + " - " + x.Vrijeme.ToString();
+                    x.DatumVrijemeString = x.Datum.ToString("dd.MM.yyyy") + " - " + x.Vrijeme.ToString(@"hh\:mm\:ss");
                     Ocjene.Add(x);
                 }
                 avgOcjena = Math.Round(list.Average(x => x.Rating), 1);

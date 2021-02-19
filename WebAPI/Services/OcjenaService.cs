@@ -51,5 +51,12 @@ namespace WebAPI.Services
             }
             return ocjene;
         }
-}
+        public override Model.Ocjena Insert(OcjenaInsertRequest request)
+        {
+            Ocjena ocjena = _mapper.Map<Ocjena>(request);
+            _context.Ocjena.Add(ocjena);
+            _context.SaveChanges();
+            return _mapper.Map<Model.Ocjena>(ocjena);
+        }
+    }
 }
