@@ -67,7 +67,8 @@ namespace WinUI.Clanovi
            
             if (btnStart.Text.Equals("Start"))
             {
-                tempImg = new Bitmap(pictureBox1.Image);
+                if(pictureBox1.Image != null)
+                    tempImg = new Bitmap(pictureBox1.Image);
                 CaptureCamera();
                 btnStart.Text = "Stop";
                 isCameraRunning = true;
@@ -75,7 +76,8 @@ namespace WinUI.Clanovi
             else
             {
                 isCameraRunning = false;
-                capture.Release();
+                if(pictureBox1.Image != null)
+                    capture.Release();
                 btnStart.Text = "Start";
                 pictureBox1.Image = tempImg;
             }

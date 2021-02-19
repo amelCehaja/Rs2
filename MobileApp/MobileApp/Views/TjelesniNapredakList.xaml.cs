@@ -36,7 +36,10 @@ namespace MobileApp.Views
         }
         public async void Uporedi(object Sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new UporedbaTjelesnihDetaljaPage(model.DetaljiJedan, model.DetaljiDva));
+            if(model.DetaljiJedan != null && model.DetaljiDva != null)
+                await Navigation.PushModalAsync(new UporedbaTjelesnihDetaljaPage(model.DetaljiJedan, model.DetaljiDva));
+            else
+                await Application.Current.MainPage.DisplayAlert("", "Potrebno odabrati oba datuma za uporedbu!", "OK");
         }
     }
 }

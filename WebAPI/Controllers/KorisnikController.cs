@@ -21,7 +21,6 @@ namespace WebAPI.Controllers
         {
             _service = service;
         }
-        [Authorize]
         [HttpGet]
         public List<Model.Korisnik> Get([FromQuery]KorisniciSearchRequest request)
         {

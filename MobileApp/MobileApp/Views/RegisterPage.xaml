@@ -16,7 +16,7 @@
             <Picker SelectedItem="{Binding Spol}">
                 <Picker.Items>
                     <x:String>M</x:String>
-                    <x:String>Z</x:String>
+                    <x:String>Ž</x:String>
                 </Picker.Items>
             </Picker>
             <Label>Datum rođenja</Label>

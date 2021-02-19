@@ -131,9 +131,14 @@ namespace MobileApp.ViewModels
                 Email = Email
             };
             List<Model.Korisnik> korisnik = await _korisnikService.Get<List<Model.Korisnik>>(emailrequest);
-            if (Telefon != null && !Regex.Match(Telefon, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+            if(korisnik.Count > 0)
             {
-                await Application.Current.MainPage.DisplayAlert("", "Dozvoljeni su samo brojevi!", "OK");
+                await Application.Current.MainPage.DisplayAlert("", "Email je vec registrovan!", "OK");
+                return;
+            }
+            if (Telefon != "" && !Regex.Match(Telefon, @"^[0-9]+$", RegexOptions.IgnoreCase).Success)
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Telefon: Dozvoljeni su samo brojevi!", "OK");
                 return;
             }
             if (string.IsNullOrWhiteSpace(Username))
@@ -185,6 +190,7 @@ namespace MobileApp.ViewModels
                 Password = Password
             };
             await _korisnikService.Insert<Korisnik>(request);
+            await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste se registrovali!", "OK");
             Application.Current.MainPage = new LoginPage();
         }
     }
