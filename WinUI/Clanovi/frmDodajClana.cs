@@ -141,6 +141,7 @@ namespace WinUI.Clanovi
             cmbSpol.Items.Add("M");
             cmbSpol.Items.Add("Ž");
             cmbSpol.SelectedIndex = 0;
+            cmbSpol.DropDownStyle = ComboBoxStyle.DropDownList;
                
             if(ClanID != null)
             {
