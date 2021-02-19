@@ -56,16 +56,22 @@ namespace MobileApp.ViewModels
         }
         public async Task PostaviPitanje()
         {
-            KomentarInsertRequest request = new KomentarInsertRequest
+            if (string.IsNullOrWhiteSpace(Pitanje))
+                await Application.Current.MainPage.DisplayAlert("", "Pitanje ne moze biti prazno!", "OK");
+            else
             {
-                Opis = Pitanje,
-                Datum = DateTime.Today,
-                KorisnikId = APIService.UserId,
-                PlanId = PlanId
-            };
-            await _komentarService.Insert<object>(request);
-            await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste postavili pitanje!", "OK");
-            await LoadKomentare();
+                KomentarInsertRequest request = new KomentarInsertRequest
+                {
+                    Opis = Pitanje,
+                    Datum = DateTime.Today,
+                    KorisnikId = APIService.UserId,
+                    PlanId = PlanId
+                };
+                await _komentarService.Insert<object>(request);
+                await Application.Current.MainPage.DisplayAlert("", "Uspjesno ste postavili pitanje!", "OK");
+                Pitanje = "";
+                await LoadKomentare();
+            }
         }
     }
 }
